@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
-import './App.css';
+const { useState, useEffect, useRef } = React;
 
 const App = () => {
   //czas
