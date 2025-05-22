@@ -1,6 +1,3 @@
-# Hit The Button Game
-
-This repository contains the *Hit The Button* game implemented in React. The app runs entirely from a single `index.html` file that loads React from a CDN and executes the game logic from `App.js`.
 
 ## Running Locally
 Open `index.html` in your browser.
@@ -12,4 +9,3 @@ Open `index.html` in your browser.
 4. Set **publish directory** to the root of the repo (`.`).
 5. Deploy the site.
 
-Netlify will host the static files (`index.html`, `App.js`, and `App.css`), and React will be loaded from a CDN.
