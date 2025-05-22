@@ -1,5 +1,7 @@
+
 const { useState, useEffect, useRef } = React;
 import './App.css';
+
 
 const App = () => {
   //czas
@@ -1633,6 +1635,8 @@ setWalls([
 
   return (
     <div className="App" style={{
+      height: 1920,
+      width: 944,
       backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
       cursor: lvl == 0 ?  "auto" : "none"
     }}>
