@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, use } from 'react';
-import './App.css';
+// React and ReactDOM are loaded via CDN in index.html
+const { useState, useEffect, useRef, use } = React;
 
 const App = () => {
   //czas
@@ -1929,4 +1929,5 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-export default App;
+// Expose the component globally so index.html can render it
+window.App = App;
