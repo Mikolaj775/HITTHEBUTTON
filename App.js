@@ -374,7 +374,7 @@ const gravity = sila * currentGravity.current;
   
             if (!wall.up) {
               // Bounce unless lvl 19/20
-              if (![19, 20].includes(lvl)) {
+              if (![20].includes(lvl)) {
                 if (newLeft < 0 || newLeft + wall.width > window.innerWidth) {
                   nextWalls.push({ ...wall, dy: -dy });
                   continue;
@@ -1649,11 +1649,6 @@ setWalls([
 
   return (
     <div className="App" style={{
-    overflow: hidden;
-      width: '100vw',
-      height: '100vh',
-      margin:0,
-      padding:0,
       backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
       cursor: lvl == 0 ?  "auto" : "none"
     }}>
