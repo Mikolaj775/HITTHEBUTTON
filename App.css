@@ -1,0 +1,179 @@
+#logo {
+  
+  margin: auto;
+  margin-top: 100px;
+  align-self: auto;
+  height: 400px;
+
+}
+.bossfight {
+  transition: transform 0.5s ease-in-out;
+  transform-origin: center center;
+  height: 100vh;
+  margin: 0;
+  text-align: center;
+  align-items: center;
+  
+}
+* {
+  margin: 0;
+
+overflow: hidden;
+
+}
+
+
+.btnimage {
+width: 73px;
+}
+.button {
+  background-color: #2b3b35;
+  border: none;
+  padding: 0;
+  width: 73pxpx;
+  height: 50px;
+  margin:0
+}
+.App {
+  text-align: center;
+  align-items: center;
+  background-color: #000000;
+  height: 100vh;
+  margin: 0;
+
+}
+
+@keyframes gasterEnter {
+  0% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+  20% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  70% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+}
+
+
+.gaster-enter {
+  animation: gasterEnter 1.2s ease-out forwards;
+}
+
+
+@keyframes gasterWallSpawn {
+  20% {
+    transform: scaleX(0.1);
+    opacity: 0.1;
+  }
+  30% {
+    transform: scaleX(1.5);
+    opacity: 1;
+  }
+  80% {
+    transform: scaleX(1.5);
+    opacity: 0.2;
+  }
+  100% {
+    transform: scaleX(0.1);
+    opacity: 0;
+  }
+}
+
+.gaster-wall {
+  opacity: 0.1;
+  transform: scaleX(1.5);
+  animation: gasterWallSpawn 1.5s ease-out forwards;
+  transform-origin: top center;
+}
+.bossfight.scaled {
+
+
+  margin-top: 4%;
+  transform: scale(0.8);
+}
+
+table {
+  margin: auto;
+  margin-top: 50px;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.sapbtn {
+  width: 40px;
+  height: 40px;
+  background-color: rgb(67, 182, 0);
+  font-weight: bolder;
+  font-size: 25px;
+}
+.type {
+  margin: 10px;
+  margin-top:30px;
+  background-color: rgb(83, 223, 2);
+  border-radius: 100px;
+  border: rgb(4, 48, 0) 4px solid;
+  font-size: larger;
+  font-weight: bold;
+  
+  height: 60px;
+  width: 180px;
+}
+#cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  
+}
+@keyframes flyOut {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.9;
+  }
+  100% {
+    transform: var(--translate) scale(0.2);
+    opacity: 0;
+  }
+}
+
+
