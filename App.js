@@ -1488,7 +1488,6 @@ setWalls([
                                                
 
 
-                    ])
                     setButtons([
                       { x: "6.51vw", y: "10.59vh", dis: false },
                       { x: "35.16vw", y: "74.15vh", dis: false },
