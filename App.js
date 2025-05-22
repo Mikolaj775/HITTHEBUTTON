@@ -1,5 +1,7 @@
-// Use React from global scripts loaded in index.html
+
 const { useState, useEffect, useRef } = React;
+import './App.css';
+
 
 const App = () => {
   //czas
@@ -59,12 +61,11 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
     
   const [buttons,setButtons] = useState([
-
-  {x:200,y:400,dis:false},
- {x:650,y:400,dis:false},
- {x:1100,y:400,dis:false},
- {x:1550,y:400,dis:false}
-
+    { x: "10.42vw", y: "42.37vh", dis: false },
+    { x: "33.85vw", y: "42.37vh", dis: false },
+    { x: "57.29vw", y: "42.37vh", dis: false },
+    { x: "80.73vw", y: "42.37vh", dis: false }
+  
 
 
 
@@ -1050,10 +1051,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "20.12vh", width: "10.42vw", height: "80vh" },
             ])
             setButtons([
-              {x:200,y:400,dis:false},
-              {x:650,y:400,dis:false},
-              {x:1100,y:400,dis:false},
-              {x:1550,y:400,dis:false}
+              { x: "10.42vw", y: "42.37vh", dis: false },
+              { x: "33.85vw", y: "42.37vh", dis: false },
+              { x: "57.29vw", y: "42.37vh", dis: false },
+              { x: "80.73vw", y: "42.37vh", dis: false }
             ])
             break;
           case 3:
@@ -1067,10 +1068,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "56.33vh", width: "30vw", height: "10.06vh" },
             ])
               setButtons([
-                {x:935,y:465,dis:false},
-                {x:935,y:680,dis:false},
-                {x:935,y:50,dis:false},
-                {x:935,y:880,dis:false}
+                { x: "48.70vw", y: "49.26vh", dis: false },
+                { x: "48.70vw", y: "72.03vh", dis: false },
+                { x: "48.70vw", y: "5.30vh", dis: false },
+                { x: "48.70vw", y: "93.22vh", dis: false }
               ])
             break;
           case 4:
@@ -1088,11 +1089,10 @@ setVelocity({ x: vx, y: vy });
             ])
             
             setButtons([
-              {x:200,y:400,dis:false},
-              {x:560,y:400,dis:false},
-              {x:910,y:400,dis:false},
-              {x:1550,y:800,dis:false}
-
+              { x: "10.42vw", y: "42.37vh", dis: false },
+              { x: "29.17vw", y: "42.37vh", dis: false },
+              { x: "47.40vw", y: "42.37vh", dis: false },
+              { x: "80.73vw", y: "84.75vh", dis: false }
             ])
 
 
@@ -1106,10 +1106,10 @@ setVelocity({ x: vx, y: vy });
               { left: "0.05vw", top: "90.01vh", width: "100vw", height: "9.99vh" },
             ])
             setButtons([
-            {x:200,y:400,dis:false},
-            {x:650,y:600,dis:false},
-            {x:1100,y:200,dis:false},
-            {x:1550,y:800,dis:false}
+            { x: "10.42vw", y: "42.37vh", dis: false },
+            { x: "33.85vw", y: "63.56vh", dis: false },
+            { x: "57.29vw", y: "21.19vh", dis: false },
+            { x: "80.73vw", y: "84.75vh", dis: false }
             ])
             break;
             case 6:
@@ -1126,10 +1126,10 @@ setVelocity({ x: vx, y: vy });
                 { left: "46.77vw", top: "0vh", width: "7.81vw", height: "9.99vh" },
               ])
               setButtons([
-                {x:140,y:600,dis:false},
-                {x:590,y:700,dis:false},
-                {x:940,y:120,dis:false},
-                {x:1150,y:900,dis:false}
+                { x: "7.29vw", y: "63.56vh", dis: false },
+                { x: "30.73vw", y: "74.15vh", dis: false },
+                { x: "48.96vw", y: "12.71vh", dis: false },
+                { x: "59.90vw", y: "95.34vh", dis: false }
               ])
               break;
             case 7:
@@ -1519,11 +1519,10 @@ setWalls([
 
                     ])
                     setButtons([
-                      {x:125,y:100,dis:false},
-                      {x:675,y:700,dis:false},
-                      {x:1625,y:150,dis:false},
-                      {x:1725,y:850,dis:true},
-                    
+                      { x: "6.51vw", y: "10.59vh", dis: false },
+                      { x: "35.16vw", y: "74.15vh", dis: false },
+                      { x: "84.64vw", y: "15.89vh", dis: false },
+                      { x: "89.84vw", y: "90.04vh", dis: true }
                     ])
                       break;
                     case 19:
@@ -2098,5 +2097,4 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-// Expose the App component to the global scope so index.html can render it
 window.App = App;

@@ -26,15 +26,15 @@ overflow: hidden;
 
 
 .btnimage {
-width: 73px;
+  width: 3.8vw;
 }
 .button {
   background-color: #2b3b35;
   border: none;
   padding: 0;
-  width: 73pxpx;
-  height: 50px;
-  margin:0
+  width: 3.8vw;
+  height: 5.3vh;
+  margin: 0;
 }
 .App {
   text-align: center;
@@ -142,23 +142,23 @@ table {
   }
 }
 .sapbtn {
-  width: 40px;
-  height: 40px;
+  width: 2.08vw;
+  height: 4.24vh;
   background-color: rgb(67, 182, 0);
   font-weight: bolder;
-  font-size: 25px;
+  font-size: 2.65vh;
 }
 .type {
-  margin: 10px;
-  margin-top:30px;
+  margin: 1.06vh;
+  margin-top: 3.18vh;
   background-color: rgb(83, 223, 2);
-  border-radius: 100px;
+  border-radius: 5.21vw;
   border: rgb(4, 48, 0) 4px solid;
   font-size: larger;
   font-weight: bold;
 
-  height: 60px;
-  width: 180px;
+  height: 6.36vh;
+  width: 9.38vw;
 }
 #cursor {
   position: absolute;
