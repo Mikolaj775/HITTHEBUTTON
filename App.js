@@ -1,6 +1,7 @@
 
-// React and ReactDOM are loaded via CDN in index.html
-const { useState, useEffect, useRef, use } = React;
+// React is loaded globally from CDN in index.html
+const { useState, useEffect, useRef } = React;
+
 
 const App = () => {
   //czas
@@ -77,10 +78,10 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
   const veloyRef = useRef(0);
 const animationRef = useRef(null);
-  const [clicked1, setClicked1] = useState("redno.png");
-  const [clicked2, setClicked2] = useState("redno.png");
-  const [clicked3, setClicked3] = useState("redno.png");
-  const [clicked4, setClicked4] = useState("redno.png");
+  const [clicked1, setClicked1] = useState("public/redno.png");
+  const [clicked2, setClicked2] = useState("public/redno.png");
+  const [clicked3, setClicked3] = useState("public/redno.png");
+  const [clicked4, setClicked4] = useState("public/redno.png");
 
   const collidedBulletsRef = useRef(new Set());
 
@@ -764,7 +765,7 @@ useEffect(() => {
         if (isOverButton) {
           if (index === 0 ) {
             setElements3("visible")
-            setClicked1("redyes.png");
+            setClicked1("public/redyes.png");
             setVisible2("visible");
             start()
             setStart2(true)
@@ -783,7 +784,7 @@ useEffect(() => {
             }
             
           } else if (index === 1 && visible2 == "visible") {
-            setClicked2("redyes.png");
+            setClicked2("public/redyes.png");
             setVisible3("visible");
             if (lvl == 6) {
               setMousesize(80)
@@ -793,7 +794,7 @@ useEffect(() => {
               setElements("hidden")
             }
           } else if (index === 2 && visible3 == "visible") {
-            setClicked3("redyes.png");
+            setClicked3("public/redyes.png");
             setVisible4("visible");
             if (lvl == 6) {
               setMousesize(200)
@@ -802,7 +803,7 @@ useEffect(() => {
             }
 
           } else if (index === 3 && visible4 == "visible") {
-            setClicked4("redyes.png");
+            setClicked4("public/redyes.png");
             setElements("hidden")
             setStart2(false)
             setLight(false)
@@ -988,10 +989,10 @@ useEffect(() => {
   useEffect(() => {
     if (
       (
-      clicked1 === "redyes.png" &&
-      clicked2 === "redyes.png" &&
-      (clicked3 === "redyes.png" || buttons[2].dis == true) &&
-      (clicked4 === "redyes.png" || buttons[3].dis == true)) || cheat
+      clicked1 === "public/redyes.png" &&
+      clicked2 === "public/redyes.png" &&
+      (clicked3 === "public/redyes.png" || buttons[2].dis == true) &&
+      (clicked4 === "public/redyes.png" || buttons[3].dis == true)) || cheat
     ) {
       setLvl(prev => {
         const newLvl = prev + 1;
@@ -1386,10 +1387,10 @@ useEffect(() => {
           default:
             break;
         }
-        setClicked1("redno.png")
-        setClicked2("redno.png")
-        setClicked3("redno.png")
-        setClicked4("redno.png")
+        setClicked1("public/redno.png")
+        setClicked2("public/redno.png")
+        setClicked3("public/redno.png")
+        setClicked4("public/redno.png")
   
         return newLvl;
       });
@@ -1449,10 +1450,10 @@ useEffect(() => {
     setElements3("hidden")
     setClicked3("hidden")
     setElements("hidden")
-    setClicked1("redno.png")
-    setClicked2("redno.png")
-    setClicked3("redno.png")
-    setClicked4("redno.png")
+    setClicked1("public/redno.png")
+    setClicked2("public/redno.png")
+    setClicked3("public/redno.png")
+    setClicked4("public/redno.png")
     setVisible2("hidden")
     setVisible3("hidden")
     setVisible4("hidden")
@@ -1506,7 +1507,7 @@ useEffect(() => {
   >
     <img
       style={{height:250,transform: blaster.rotate ?  "none" : "rotate(90deg)"}}
-      src="gasteropen.png"
+      src="public/gasteropen.png"
     />
   </div>
 ))}
@@ -1663,7 +1664,7 @@ useEffect(() => {
       {/* Fake cursor */}
       <img 
         id='cursor'
-        src="cursor.png"
+        src="public/cursor.png"
         alt="custom cursor"
         style={{
           width: mousesize,
@@ -1678,7 +1679,7 @@ useEffect(() => {
       />
             <img 
         id='cursor2'
-        src="cursor.png"
+        src="public/cursor.png"
         style={{
           width: 200,
           height:200 * 1.42 ,
@@ -1692,7 +1693,7 @@ useEffect(() => {
       />
 <img
   id='light'
-  src="light.png"
+  src="public/light.png"
   alt="custom cursor"
   style={{
     visibility: "hidden",
@@ -1718,7 +1719,7 @@ useEffect(() => {
       border: "none"
     }}
   >
-    <img id="logo" src="LOGO.png" alt="Logo" />
+    <img id="logo" src="public/LOGO.png" alt="Logo" />
   </button>
 
   <br />
@@ -1734,7 +1735,7 @@ useEffect(() => {
     }}
   >
     <img 
-      src="redno.png"
+      src="public/redno.png"
       alt="Red No"
       style={{
         backgroundColor: "#2b3b35",
@@ -1917,7 +1918,7 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
 
 
 }}>POZOSTAŁE RUCHU {iloscruchow}</h1>
-<img src='nowifi.png' style={{
+<img src='public/nowifi.png' style={{
   height:200,
   zIndex:9995,
 
@@ -1930,4 +1931,6 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
+
 window.App = App;
+
