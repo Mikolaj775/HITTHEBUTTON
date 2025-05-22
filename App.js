@@ -467,6 +467,21 @@ useEffect(() => {
 
 // One-time checks for static walls and fans, triggered on position change
 useEffect(() => {
+  // Check for out-of-bounds screen
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  if (
+    fakePosX < -40 ||
+    fakePosX > screenWidth + 40 ||
+    fakePosY < -40 ||
+    fakePosY > screenHeight + 40
+  ) {
+    die();
+    return;
+  }
+
+  // Collision with walls
   wallRefs2.current.forEach((wall2) => {
     if (!wall2) return;
 
@@ -482,6 +497,7 @@ useEffect(() => {
     }
   });
 
+  // Interaction with fans
   fanRefs.current.forEach((fanRef, index) => {
     const fanData = fans[index];
     if (!fanRef || !fanData) return;
@@ -505,6 +521,7 @@ useEffect(() => {
     }
   });
 }, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans]);
+
 
 
 
