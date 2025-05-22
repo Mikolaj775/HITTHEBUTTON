@@ -54,15 +54,10 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
     
   const [buttons,setButtons] = useState([
-
-  {x:200,y:400,dis:false},
- {x:650,y:400,dis:false},
- {x:1100,y:400,dis:false},
- {x:1550,y:400,dis:false}
-
-
-
-
+    { x: "10.42vw", y: "42.37vh", dis: false },
+    { x: "33.85vw", y: "42.37vh", dis: false },
+    { x: "57.29vw", y: "42.37vh", dis: false },
+    { x: "80.73vw", y: "42.37vh", dis: false }
   ])
   
   const [mousesize,setMousesize] = useState(30)
@@ -78,10 +73,10 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
   const veloyRef = useRef(0);
 const animationRef = useRef(null);
-  const [clicked1, setClicked1] = useState("redno.png");
-  const [clicked2, setClicked2] = useState("redno.png");
-  const [clicked3, setClicked3] = useState("redno.png");
-  const [clicked4, setClicked4] = useState("redno.png");
+  const [clicked1, setClicked1] = useState("/public/redno.png");
+  const [clicked2, setClicked2] = useState("/public/redno.png");
+  const [clicked3, setClicked3] = useState("/public/redno.png");
+  const [clicked4, setClicked4] = useState("/public/redno.png");
 
   const collidedBulletsRef = useRef(new Set());
 
@@ -830,7 +825,7 @@ setVelocity({ x: vx, y: vy });
 
             setElements3("visible")
             setElements("visible")
-            setClicked1("redyes.png");
+            setClicked1("/public/redyes.png");
             setVisible2("visible");
             start()
             setStart2(true)
@@ -849,7 +844,7 @@ setVelocity({ x: vx, y: vy });
             }
             
           } else if (index === 1 && visible2 == "visible") {
-            setClicked2("redyes.png");
+            setClicked2("/public/redyes.png");
             setVisible3("visible");
             if (lvl == 6) {
               setMousesize(80)
@@ -859,7 +854,7 @@ setVelocity({ x: vx, y: vy });
               setElements("hidden")
             }
           } else if (index === 2 && visible3 == "visible") {
-            setClicked3("redyes.png");
+            setClicked3("/public/redyes.png");
             setVisible4("visible");
             if (lvl == 6) {
               setMousesize(200)
@@ -868,7 +863,7 @@ setVelocity({ x: vx, y: vy });
             }
 
           } else if (index === 3 && visible4 == "visible") {
-            setClicked4("redyes.png");
+            setClicked4("/public/redyes.png");
             setElements("hidden")
             setStart2(false)
             setLight(false)
@@ -1055,10 +1050,10 @@ setVelocity({ x: vx, y: vy });
     if (
       
       (
-      clicked1 === "redyes.png" &&
-      clicked2 === "redyes.png" &&
-      (clicked3 === "redyes.png" || buttons[2].dis == true) &&
-      (clicked4 === "redyes.png" || buttons[3].dis == true)) || cheat || (bosshp < 0 && wave3Ref.current == true)
+      clicked1 === "/public/redyes.png" &&
+      clicked2 === "/public/redyes.png" &&
+      (clicked3 === "/public/redyes.png" || buttons[2].dis == true) &&
+      (clicked4 === "/public/redyes.png" || buttons[3].dis == true)) || cheat || (bosshp < 0 && wave3Ref.current == true)
     ) {
       setLvl(prev => {
         const newLvl = prev + 1;
@@ -1079,10 +1074,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "20.12vh", width: "10.42vw", height: "80vh" },
             ])
             setButtons([
-              {x:200,y:400,dis:false},
-              {x:650,y:400,dis:false},
-              {x:1100,y:400,dis:false},
-              {x:1550,y:400,dis:false}
+              { x: "10.42vw", y: "42.37vh", dis: false },
+              { x: "33.85vw", y: "42.37vh", dis: false },
+              { x: "57.29vw", y: "42.37vh", dis: false },
+              { x: "80.73vw", y: "42.37vh", dis: false }
             ])
             break;
           case 3:
@@ -1096,10 +1091,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "56.33vh", width: "30vw", height: "10.06vh" },
             ])
               setButtons([
-                {x:935,y:465,dis:false},
-                {x:935,y:680,dis:false},
-                {x:935,y:50,dis:false},
-                {x:935,y:880,dis:false}
+                { x: "48.70vw", y: "49.26vh", dis: false },
+                { x: "48.70vw", y: "72.03vh", dis: false },
+                { x: "48.70vw", y: "5.30vh", dis: false },
+                { x: "48.70vw", y: "93.22vh", dis: false }
               ])
             break;
           case 4:
@@ -1117,10 +1112,10 @@ setVelocity({ x: vx, y: vy });
             ])
             
             setButtons([
-              {x:200,y:400,dis:false},
-              {x:560,y:400,dis:false},
-              {x:910,y:400,dis:false},
-              {x:1550,y:800,dis:false}
+              { x: "10.42vw", y: "42.37vh", dis: false },
+              { x: "29.17vw", y: "42.37vh", dis: false },
+              { x: "47.40vw", y: "42.37vh", dis: false },
+              { x: "80.73vw", y: "84.75vh", dis: false }
 
             ])
 
@@ -1135,10 +1130,10 @@ setVelocity({ x: vx, y: vy });
               { left: "0.05vw", top: "90.01vh", width: "100vw", height: "9.99vh" },
             ])
             setButtons([
-            {x:200,y:400,dis:false},
-            {x:650,y:600,dis:false},
-            {x:1100,y:200,dis:false},
-            {x:1550,y:800,dis:false}
+            { x: "10.42vw", y: "42.37vh", dis: false },
+            { x: "33.85vw", y: "63.56vh", dis: false },
+            { x: "57.29vw", y: "21.19vh", dis: false },
+            { x: "80.73vw", y: "84.75vh", dis: false }
             ])
             break;
             case 6:
@@ -1155,10 +1150,10 @@ setVelocity({ x: vx, y: vy });
                 { left: "46.77vw", top: "0vh", width: "7.81vw", height: "9.99vh" },
               ])
               setButtons([
-                {x:140,y:600,dis:false},
-                {x:590,y:700,dis:false},
-                {x:940,y:120,dis:false},
-                {x:1150,y:900,dis:false}
+                { x: "7.29vw", y: "63.56vh", dis: false },
+                { x: "30.73vw", y: "74.15vh", dis: false },
+                { x: "48.96vw", y: "12.71vh", dis: false },
+                { x: "59.90vw", y: "95.34vh", dis: false }
               ])
               break;
             case 7:
@@ -1297,41 +1292,11 @@ setVelocity({ x: vx, y: vy });
                     setVis1("none");
                     setVis2("block");
 setWalls([
-  {
-    id: 'wall1',
-    left: window.innerWidth * 0.1823,
-    top: window.innerHeight * 0.2012,
-    width: window.innerWidth * 0.1042,
-    height: window.innerHeight * 0.8048
-  },
-  {
-    id: 'wall2',
-    left: window.innerWidth * 0.6510,
-    top: window.innerHeight * 0.2012,
-    width: window.innerWidth * 0.1042,
-    height: window.innerHeight * 0.8048
-  },
-  {
-    id: 'wall3',
-    left: window.innerWidth * 0.4167,
-    top: 0,
-    width: window.innerWidth * 0.1042,
-    height: window.innerHeight * 0.8048
-  },
-  {
-    id: 'wall4',
-    left: 0,
-    top: window.innerHeight * 0.9839,
-    width: window.innerWidth * 1.0417,
-    height: window.innerHeight * 0.0201
-  },
-  {
-    id: 'wall5',
-    left: 0,
-    top: 0,
-    width: window.innerWidth * 1.0417,
-    height: window.innerHeight * 0.0201
-  }
+  { id: 'wall1', left: '18.23vw', top: '20.12vh', width: '10.42vw', height: '80.48vh' },
+  { id: 'wall2', left: '65.10vw', top: '20.12vh', width: '10.42vw', height: '80.48vh' },
+  { id: 'wall3', left: '41.67vw', top: '0vh', width: '10.42vw', height: '80.48vh' },
+  { id: 'wall4', left: '0vw', top: '98.39vh', width: '104.17vw', height: '2.01vh' },
+  { id: 'wall5', left: '0vw', top: '0vh', width: '104.17vw', height: '2.01vh' }
 ]);
 
                     setWalls([
@@ -1400,34 +1365,10 @@ setWalls([
                     break;
                     case 16:
 setWalls([
-  {
-    id: 'wall1',
-    left: window.innerWidth * 0.99,
-    top: 0,
-    width: window.innerWidth * 0.0104,
-    height: window.innerHeight
-  },
-  {
-    id: 'wall2',
-    left: window.innerWidth * 0.2083,
-    top: window.innerHeight * 0.3018,
-    width: window.innerWidth * 0.0781,
-    height: window.innerHeight * 0.3018
-  },
-  {
-    id: 'wall3',
-    left: window.innerWidth * 0.4167,
-    top: window.innerHeight * 0.4024,
-    width: window.innerWidth * 0.1563,
-    height: window.innerHeight * 0.1509
-  },
-  {
-    id: 'wall4',
-    left: window.innerWidth * 0.7292,
-    top: window.innerHeight * 0.2012,
-    width: window.innerWidth * 0.0781,
-    height: window.innerHeight * 0.8048
-  }
+  { id: 'wall1', left: '99vw', top: '0vh', width: '1.04vw', height: '100vh' },
+  { id: 'wall2', left: '20.83vw', top: '30.18vh', width: '7.81vw', height: '30.18vh' },
+  { id: 'wall3', left: '41.67vw', top: '40.24vh', width: '15.63vw', height: '15.09vh' },
+  { id: 'wall4', left: '72.92vw', top: '20.12vh', width: '7.81vw', height: '80.48vh' }
 ]);
 
                       setFans([
@@ -1527,32 +1468,32 @@ setWalls([
                     case 18:
                       setSila(0.2)
                       setWalls([
-                        { left: 0, top: "98vh", width: 2000, height: "2vh" },
-                        { left: 300, top: 0, width: 150, height: 200 },
-                        { left: 300, top: 400, width: 150, height: 800 },
-                        { left: 750, top: 0, width: 150, height: 600 },
-                        { left: 750, top: 800, width: 150, height: 600 },
+                        { left: "0vw", top: "98vh", width: "104.17vw", height: "2vh" },
+                        { left: "15.63vw", top: "0vh", width: "7.81vw", height: "21.19vh" },
+                        { left: "15.63vw", top: "42.37vh", width: "7.81vw", height: "84.75vh" },
+                        { left: "39.06vw", top: "0vh", width: "7.81vw", height: "63.56vh" },
+                        { left: "39.06vw", top: "84.75vh", width: "7.81vw", height: "63.56vh" },
 
 
 
                       ])
                     setFans([
-                      { x: 0, y: 500 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
-                      { x: 450, y: 400 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
-                      { x: 0, y: 0 ,sizex: 2000, sizey: 1, strx: 0, stry: 0 },
-                      { x: 1050, y: 800 ,sizex: 150, sizey: 800, strx: 0, stry: -3 },
-                      { x: 1550, y: 200 ,sizex: 200, sizey: 200, strx: 0, stry: -1 },
+                      { x: "0vw", y: "53.05vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -0.2 },
+                      { x: "23.44vw", y: "42.37vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -0.2 },
+                      { x: "0vw", y: "0vh", sizex: "104.17vw", sizey: "0.11vh", strx: 0, stry: 0 },
+                      { x: "54.69vw", y: "84.75vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -3 },
+                      { x: "80.73vw", y: "21.19vh", sizex: "10.42vw", sizey: "21.19vh", strx: 0, stry: -1 },
+                    ])
 
                                                
 
 
                     ])
                     setButtons([
-                      {x:125,y:100,dis:false},
-                      {x:675,y:700,dis:false},
-                      {x:1625,y:150,dis:false},
-                      {x:1725,y:850,dis:true},
-                    
+                      { x: "6.51vw", y: "10.59vh", dis: false },
+                      { x: "35.16vw", y: "74.15vh", dis: false },
+                      { x: "84.64vw", y: "15.89vh", dis: false },
+                      { x: "89.84vw", y: "90.04vh", dis: true },
                     ])
                       break;
                     case 19:
@@ -1567,10 +1508,10 @@ setWalls([
                       ])
                       setButtons([
 
-                        {x:200,y:400,dis:false},
-                       {x:650,y:400,dis:false},
-                       {x:1100,y:400,dis:false},
-                       {x:1550,y:400,dis:false}
+                        { x: "10.42vw", y: "42.37vh", dis: false },
+                       { x: "33.85vw", y: "42.37vh", dis: false },
+                       { x: "57.29vw", y: "42.37vh", dis: false },
+                       { x: "80.73vw", y: "42.37vh", dis: false }
                       
                       
                       
@@ -1603,10 +1544,10 @@ setWalls([
           default:
             break;
         }
-        setClicked1("redno.png")
-        setClicked2("redno.png")
-        setClicked3("redno.png")
-        setClicked4("redno.png")
+        setClicked1("/public/redno.png")
+        setClicked2("/public/redno.png")
+        setClicked3("/public/redno.png")
+        setClicked4("/public/redno.png")
   
         return newLvl;
       });
@@ -1669,10 +1610,10 @@ setWalls([
     setElements3("hidden")
     setClicked3("hidden")
     setElements("hidden")
-    setClicked1("redno.png")
-    setClicked2("redno.png")
-    setClicked3("redno.png")
-    setClicked4("redno.png")
+    setClicked1("/public/redno.png")
+    setClicked2("/public/redno.png")
+    setClicked3("/public/redno.png")
+    setClicked4("/public/redno.png")
     setVisible2("hidden")
     setVisible3("hidden")
     setVisible4("hidden")
@@ -1727,7 +1668,7 @@ setWalls([
   >
     <img
       style={{height:250,transform: blaster.rotate ?  "none" : "rotate(90deg)"}}
-      src="gasteropen.png"
+      src="/public/gasteropen.png"
     />
   </div>
 ))}
@@ -1882,9 +1823,9 @@ setWalls([
 
 
       {/* Fake cursor */}
-      <img 
+      <img
         id='cursor'
-        src="cursor.png"
+        src="/public/cursor.png"
         alt="custom cursor"
         style={{
           width: mousesize,
@@ -1897,9 +1838,9 @@ setWalls([
           visibility: lvl == 0 ?  "hidden" : "visible"
         }}
       />
-            <img 
+            <img
         id='cursor2'
-        src="cursor.png"
+        src="/public/cursor.png"
         style={{
           width: 200,
           height:200 * 1.42 ,
@@ -1913,7 +1854,7 @@ setWalls([
       />
 <img
   id='light'
-  src="light.png"
+  src="/public/light.png"
   alt="custom cursor"
   style={{
     visibility: light ? 'visible':'hidden' ,
@@ -1939,7 +1880,7 @@ setWalls([
       border: "none"
     }}
   >
-    <img id="logo" src="LOGO.png" alt="Logo" />
+    <img id="logo" src="/public/LOGO.png" alt="Logo" />
   </button>
 
   <br />
@@ -1954,8 +1895,8 @@ setWalls([
       border: "none"
     }}
   >
-    <img 
-      src="redno.png"
+    <img
+      src="/public/redno.png"
       alt="Red No"
       style={{
         backgroundColor: "#2b3b35",
@@ -2141,7 +2082,7 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
 
 
 }}>POZOSTAŁE RUCHU {iloscruchow}</h1>
-<img src='nowifi.png' style={{
+<img src='/public/nowifi.png' style={{
   height:200,
   zIndex:9995,
 
