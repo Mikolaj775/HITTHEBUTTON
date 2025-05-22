@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, use } from 'react';
-import './App.css';
+// React is loaded globally via CDN in index.html
+// CSS is also linked from index.html
+// The game logic below is unchanged
 
 const App = () => {
   //czas
@@ -1929,4 +1930,3 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-export default App;
