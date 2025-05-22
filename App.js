@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, use } from 'react';
-import './App.css';
+// Use React from global scripts loaded in index.html
+const { useState, useEffect, useRef } = React;
 
 const App = () => {
   //czas
@@ -2096,4 +2096,5 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-export default App;
+// Expose the App component to the global scope so index.html can render it
+window.App = App;
