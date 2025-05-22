@@ -1,5 +1,7 @@
+
 // React is loaded globally from CDN in index.html
 const { useState, useEffect, useRef } = React;
+
 
 const App = () => {
   //czas
@@ -1928,4 +1930,7 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
     </div>
   );
 };
+
+
+window.App = App;
 
