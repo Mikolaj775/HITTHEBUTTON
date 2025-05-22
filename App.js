@@ -1,5 +1,5 @@
 
-// React is loaded globally from CDN in index.html
+// React is loaded globally via CDN in index.html
 const { useState, useEffect, useRef } = React;
 
 
@@ -1932,5 +1932,8 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
 };
 
 
+
+
 window.App = App;
+
 
