@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 import './App.css';
 
 const App = () => {
@@ -2093,4 +2093,5 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-export default App;
+// Expose the App component globally so index.html can access it without modules
+window.App = App;
