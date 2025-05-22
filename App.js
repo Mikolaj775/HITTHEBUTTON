@@ -1,7 +1,6 @@
-
-const { useState, useEffect, useRef } = React;
+import React, { useState, useEffect, useRef, use } from 'react';
 import './App.css';
-
+import { computeHeadingLevel } from '@testing-library/dom';
 
 const App = () => {
   //czas
@@ -32,13 +31,7 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const fanRefs = useRef([]);
   const [ping,setPing] = useState(1)
   const [walls, setWalls] = useState([
-                        { left: "0vw",     top: "0vh",     width: "100vw",   height: "5.03vh" },
-                        { left: "0vw",     top: "94.97vh", width: "100vw",   height: "5.03vh" },
-                        { left: "0vw",     top: "0vh",     width: "3.13vw",  height: "100vh" },
-                        { left: "97.40vw", top: "0vh",     width: "3.13vw",  height: "100vh" },
-                        { left: "78.13vw", top: "20.12vh", width: "7.81vw",  height: "80.48vh" },
-                        { left: "0vw",     top: "60.36vh", width: "62.50vw", height: "15.09vh" },
-                        { left: "15.63vw", top: "20.12vh", width: "62.50vw", height: "15.09vh" },
+
   ]);
   const [cheat,setCheat] = useState(false)
   const [updated,setUpdated] = useState(false)
@@ -61,11 +54,12 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
     
   const [buttons,setButtons] = useState([
-    { x: "10.42vw", y: "42.37vh", dis: false },
-    { x: "33.85vw", y: "42.37vh", dis: false },
-    { x: "57.29vw", y: "42.37vh", dis: false },
-    { x: "80.73vw", y: "42.37vh", dis: false }
-  
+
+  {x:200,y:400,dis:false},
+ {x:650,y:400,dis:false},
+ {x:1100,y:400,dis:false},
+ {x:1550,y:400,dis:false}
+
 
 
 
@@ -84,10 +78,10 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
   const veloyRef = useRef(0);
 const animationRef = useRef(null);
-  const [clicked1, setClicked1] = useState("public/redno.png");
-  const [clicked2, setClicked2] = useState("public/redno.png");
-  const [clicked3, setClicked3] = useState("public/redno.png");
-  const [clicked4, setClicked4] = useState("public/redno.png");
+  const [clicked1, setClicked1] = useState("redno.png");
+  const [clicked2, setClicked2] = useState("redno.png");
+  const [clicked3, setClicked3] = useState("redno.png");
+  const [clicked4, setClicked4] = useState("redno.png");
 
   const collidedBulletsRef = useRef(new Set());
 
@@ -362,7 +356,7 @@ const gravity = sila * currentGravity.current;
     }
   }, [lvl]);
   useEffect(() => {
-    if (![11, 15, 17, 19, 20].includes(lvl)) return;
+    if (![11, 15, 17, 20].includes(lvl)) return;
   
     const interval = setInterval(() => {
       setWalls(prevWalls => {
@@ -446,7 +440,7 @@ useEffect(() => {
 
         const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-        if ((opacity > 0.6 || lvl != 20) && isOverWall && (elements === "visible" || lvl === 12)) {
+        if ((opacity > 0.6 || (lvl != 20 && lvl != 19)) && isOverWall && (elements === "visible" || lvl === 12)) {
           die();
         }
       } else {
@@ -539,7 +533,7 @@ useEffect(() => {
         ...prev,
         {
           id: wallId,
-          top: blaster.rotate ? blaster.top + 150 : blaster.top + (blaster.height / 2) - 120,
+          top: blaster.rotate ? blaster.top : blaster.top + (blaster.height / 2) - 120,
           left: blaster.rotate ? blaster.left + 150 : blaster.left - 2000 + blaster.width,
           width: blaster.rotate ? 80 : 2000,
           height: blaster.rotate ? 1000 : 80,
@@ -701,8 +695,44 @@ useEffect(() => {
   
 
 }, [lvl, bossY, time,bosshp,wave2]);
+useEffect(() => {
+  if (lvl !== 19) return;
+
+  const interval = setInterval(() => {
+    // Wave 1
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 50, left: 0, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: Math.floor(Math.random() * 1800), height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 900, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1800, height: 400, width: 400, rotate: true },
+      ]);
+    }, 0);
+
+    // Wave 2
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+
+      ]);
+    }, 1000);
+
+  }, 2000); // Loop every 3s
+  return () => clearInterval(interval); // 🔁 Clean up on unmount or level change
 
 
+
+  
+}, [lvl,start2]);
 
 
 
@@ -799,11 +829,8 @@ setVelocity({ x: vx, y: vy });
           if (index === 0 ) {
 
             setElements3("visible")
-
-            setClicked1("public/redyes.png");
-
             setElements("visible")
-
+            setClicked1("redyes.png");
             setVisible2("visible");
             start()
             setStart2(true)
@@ -822,7 +849,7 @@ setVelocity({ x: vx, y: vy });
             }
             
           } else if (index === 1 && visible2 == "visible") {
-            setClicked2("public/redyes.png");
+            setClicked2("redyes.png");
             setVisible3("visible");
             if (lvl == 6) {
               setMousesize(80)
@@ -832,7 +859,7 @@ setVelocity({ x: vx, y: vy });
               setElements("hidden")
             }
           } else if (index === 2 && visible3 == "visible") {
-            setClicked3("public/redyes.png");
+            setClicked3("redyes.png");
             setVisible4("visible");
             if (lvl == 6) {
               setMousesize(200)
@@ -841,7 +868,7 @@ setVelocity({ x: vx, y: vy });
             }
 
           } else if (index === 3 && visible4 == "visible") {
-            setClicked4("public/redyes.png");
+            setClicked4("redyes.png");
             setElements("hidden")
             setStart2(false)
             setLight(false)
@@ -1026,11 +1053,12 @@ setVelocity({ x: vx, y: vy });
 //USTAWIANIE LVL
   useEffect(() => {
     if (
+      
       (
-      clicked1 === "public/redyes.png" &&
-      clicked2 === "public/redyes.png" &&
-      (clicked3 === "public/redyes.png" || buttons[2].dis == true) &&
-      (clicked4 === "public/redyes.png" || buttons[3].dis == true)) || cheat
+      clicked1 === "redyes.png" &&
+      clicked2 === "redyes.png" &&
+      (clicked3 === "redyes.png" || buttons[2].dis == true) &&
+      (clicked4 === "redyes.png" || buttons[3].dis == true)) || cheat || (bosshp < 0 && wave3Ref.current == true)
     ) {
       setLvl(prev => {
         const newLvl = prev + 1;
@@ -1051,10 +1079,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "20.12vh", width: "10.42vw", height: "80vh" },
             ])
             setButtons([
-              { x: "10.42vw", y: "42.37vh", dis: false },
-              { x: "33.85vw", y: "42.37vh", dis: false },
-              { x: "57.29vw", y: "42.37vh", dis: false },
-              { x: "80.73vw", y: "42.37vh", dis: false }
+              {x:200,y:400,dis:false},
+              {x:650,y:400,dis:false},
+              {x:1100,y:400,dis:false},
+              {x:1550,y:400,dis:false}
             ])
             break;
           case 3:
@@ -1068,10 +1096,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "56.33vh", width: "30vw", height: "10.06vh" },
             ])
               setButtons([
-                { x: "48.70vw", y: "49.26vh", dis: false },
-                { x: "48.70vw", y: "72.03vh", dis: false },
-                { x: "48.70vw", y: "5.30vh", dis: false },
-                { x: "48.70vw", y: "93.22vh", dis: false }
+                {x:935,y:465,dis:false},
+                {x:935,y:680,dis:false},
+                {x:935,y:50,dis:false},
+                {x:935,y:880,dis:false}
               ])
             break;
           case 4:
@@ -1089,10 +1117,11 @@ setVelocity({ x: vx, y: vy });
             ])
             
             setButtons([
-              { x: "10.42vw", y: "42.37vh", dis: false },
-              { x: "29.17vw", y: "42.37vh", dis: false },
-              { x: "47.40vw", y: "42.37vh", dis: false },
-              { x: "80.73vw", y: "84.75vh", dis: false }
+              {x:200,y:400,dis:false},
+              {x:560,y:400,dis:false},
+              {x:910,y:400,dis:false},
+              {x:1550,y:800,dis:false}
+
             ])
 
 
@@ -1106,10 +1135,10 @@ setVelocity({ x: vx, y: vy });
               { left: "0.05vw", top: "90.01vh", width: "100vw", height: "9.99vh" },
             ])
             setButtons([
-            { x: "10.42vw", y: "42.37vh", dis: false },
-            { x: "33.85vw", y: "63.56vh", dis: false },
-            { x: "57.29vw", y: "21.19vh", dis: false },
-            { x: "80.73vw", y: "84.75vh", dis: false }
+            {x:200,y:400,dis:false},
+            {x:650,y:600,dis:false},
+            {x:1100,y:200,dis:false},
+            {x:1550,y:800,dis:false}
             ])
             break;
             case 6:
@@ -1126,10 +1155,10 @@ setVelocity({ x: vx, y: vy });
                 { left: "46.77vw", top: "0vh", width: "7.81vw", height: "9.99vh" },
               ])
               setButtons([
-                { x: "7.29vw", y: "63.56vh", dis: false },
-                { x: "30.73vw", y: "74.15vh", dis: false },
-                { x: "48.96vw", y: "12.71vh", dis: false },
-                { x: "59.90vw", y: "95.34vh", dis: false }
+                {x:140,y:600,dis:false},
+                {x:590,y:700,dis:false},
+                {x:940,y:120,dis:false},
+                {x:1150,y:900,dis:false}
               ])
               break;
             case 7:
@@ -1519,18 +1548,42 @@ setWalls([
 
                     ])
                     setButtons([
-                      { x: "6.51vw", y: "10.59vh", dis: false },
-                      { x: "35.16vw", y: "74.15vh", dis: false },
-                      { x: "84.64vw", y: "15.89vh", dis: false },
-                      { x: "89.84vw", y: "90.04vh", dis: true }
+                      {x:125,y:100,dis:false},
+                      {x:675,y:700,dis:false},
+                      {x:1625,y:150,dis:false},
+                      {x:1725,y:850,dis:true},
+                    
                     ])
                       break;
                     case 19:
-                      setFans([])
-          setWalls([
-              { left: 1700, top: 475, width: 200, height: 125, dy: -1 ,up:false},
+                      setMulti(1)
+                      setVis1("none");
+                      setVis2("block");
+                      setWalls([
+                        { left: "0vw", top: "0vh", width: "100vw", height: "10vh" },
+                        { left: "18.23vw", top: "0vh", width: "10.42vw", height: "80vh" },
+                        { left: "65.1vw", top: "0vh", width: "10.42vw", height: "80vh" },
+                        { left: "41.67vw", top: "30.12vh", width: "10.42vw", height: "80vh" },
+                      ])
+                      setButtons([
 
-            ])
+                        {x:200,y:400,dis:false},
+                       {x:650,y:400,dis:false},
+                       {x:1100,y:400,dis:false},
+                       {x:1550,y:400,dis:false}
+                      
+                      
+                      
+                      
+                        ])
+                      setGaster([
+                        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+                        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+                        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+                        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+                        { id: Date.now() + Math.random(), top: Math.floor(Math.random() * 800), left: 1800, height: 400, width: 400, rotate: false },
+                
+                      ]);
             break;
             case 20:
               setBosshp(500)
@@ -1541,14 +1594,19 @@ setWalls([
                 
               ])
               break;
+              case 21:
+                setWalls([])
+                setFans([])
+                setMousesize(100)
+              break;
 
           default:
             break;
         }
-        setClicked1("public/redno.png")
-        setClicked2("public/redno.png")
-        setClicked3("public/redno.png")
-        setClicked4("public/redno.png")
+        setClicked1("redno.png")
+        setClicked2("redno.png")
+        setClicked3("redno.png")
+        setClicked4("redno.png")
   
         return newLvl;
       });
@@ -1587,6 +1645,7 @@ setWalls([
       console.log("19")
       setVis1("visible")
       setVis3("none")
+      setElements("visible")
     }
     if (lvl == 20) {
       setBosshp(500)
@@ -1610,10 +1669,10 @@ setWalls([
     setElements3("hidden")
     setClicked3("hidden")
     setElements("hidden")
-    setClicked1("public/redno.png")
-    setClicked2("public/redno.png")
-    setClicked3("public/redno.png")
-    setClicked4("public/redno.png")
+    setClicked1("redno.png")
+    setClicked2("redno.png")
+    setClicked3("redno.png")
+    setClicked4("redno.png")
     setVisible2("hidden")
     setVisible3("hidden")
     setVisible4("hidden")
@@ -1635,8 +1694,6 @@ setWalls([
 
   return (
     <div className="App" style={{
-      height: 1920,
-      width: 944,
       backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
       cursor: lvl == 0 ?  "auto" : "none"
     }}>
@@ -1670,7 +1727,7 @@ setWalls([
   >
     <img
       style={{height:250,transform: blaster.rotate ?  "none" : "rotate(90deg)"}}
-      src="public/gasteropen.png"
+      src="gasteropen.png"
     />
   </div>
 ))}
@@ -1827,7 +1884,7 @@ setWalls([
       {/* Fake cursor */}
       <img 
         id='cursor'
-        src="public/cursor.png"
+        src="cursor.png"
         alt="custom cursor"
         style={{
           width: mousesize,
@@ -1842,7 +1899,7 @@ setWalls([
       />
             <img 
         id='cursor2'
-        src="public/cursor.png"
+        src="cursor.png"
         style={{
           width: 200,
           height:200 * 1.42 ,
@@ -1856,7 +1913,7 @@ setWalls([
       />
 <img
   id='light'
-  src="public/light.png"
+  src="light.png"
   alt="custom cursor"
   style={{
     visibility: light ? 'visible':'hidden' ,
@@ -1882,7 +1939,7 @@ setWalls([
       border: "none"
     }}
   >
-    <img id="logo" src="public/LOGO.png" alt="Logo" />
+    <img id="logo" src="LOGO.png" alt="Logo" />
   </button>
 
   <br />
@@ -1898,7 +1955,7 @@ setWalls([
     }}
   >
     <img 
-      src="public/redno.png"
+      src="redno.png"
       alt="Red No"
       style={{
         backgroundColor: "#2b3b35",
@@ -2084,7 +2141,7 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
 
 
 }}>POZOSTAŁE RUCHU {iloscruchow}</h1>
-<img src='public/nowifi.png' style={{
+<img src='nowifi.png' style={{
   height:200,
   zIndex:9995,
 
@@ -2097,4 +2154,4 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-window.App = App;
+export default App;
