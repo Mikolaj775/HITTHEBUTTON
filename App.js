@@ -444,7 +444,7 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX  <= bounds.right &&
+          bossX  <= bounds.right + 200 &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
@@ -1649,6 +1649,8 @@ setWalls([
 
   return (
     <div className="App" style={{
+      margin:0,
+      padding:0,
       backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
       cursor: lvl == 0 ?  "auto" : "none"
     }}>
