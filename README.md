@@ -1,4 +1,20 @@
 
+# Hit The Button React Game
+
+This repository contains a simple browser game built with React. Everything runs directly in the browser using CDN scripts—no build step is needed.
+
+## Running Locally
+1. Place all image assets inside the `public/` folder.
+2. Open `index.html` in your browser and the game will load.
+
+## Deploying to Netlify
+1. Push this repository to your Git provider.
+2. In Netlify choose **New site from Git** and select the repository.
+3. Leave the build command empty.
+4. Set the publish directory to the repo root (`.`).
+5. Deploy the site.
+
+
 # Hit The Button
 
 This project contains a small browser game built with React. All code is written directly in `index.html` and `App.js` so no build step is required.
@@ -45,4 +61,5 @@ Place any image assets in the `public/` directory so they can be referenced from
 `App.js` (e.g., `public/example.png`).
 
 Netlify will host the static `index.html` file, and React will be loaded from a CDN.
+
 
