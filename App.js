@@ -1,5 +1,5 @@
-const { useState, useEffect, useRef } = React;
-const img = name => `public/${name}`;
+import React, { useState, useEffect, useRef, use } from 'react';
+import './App.css';
 
 const App = () => {
   //czas
@@ -10,6 +10,7 @@ const App = () => {
   const [fakePosX, setFakePosX] = useState(0);
   const [fakePosY, setFakePosY] = useState(0);
 
+  const wave3Ref = useRef(false)
   
   const [iloscruchow,setIloscruchow] = useState(5)
 
@@ -73,8 +74,6 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const [multi,setMulti] = useState(1)
 
   const targetGravity = useRef(1); // docelowa wartość
-const MAX_WALLS = 100;
-const addWall = wall => setWalls(prev => { const arr = prev.length >= MAX_WALLS ? prev.slice(prev.length - MAX_WALLS + 1) : prev; return [...arr, wall]; });
   const currentGravity = useRef(1); // płynna zmiana
   
   const [vis4,setVis4] = useState("none")
@@ -84,10 +83,10 @@ const addWall = wall => setWalls(prev => { const arr = prev.length >= MAX_WALLS 
 
   const veloyRef = useRef(0);
 const animationRef = useRef(null);
-  const [clicked1, setClicked1] = useState(img("redno.png"));
-  const [clicked2, setClicked2] = useState(img("redno.png"));
-  const [clicked3, setClicked3] = useState(img("redno.png"));
-  const [clicked4, setClicked4] = useState(img("redno.png"));
+  const [clicked1, setClicked1] = useState("redno.png");
+  const [clicked2, setClicked2] = useState("redno.png");
+  const [clicked3, setClicked3] = useState("redno.png");
+  const [clicked4, setClicked4] = useState("redno.png");
 
   const collidedBulletsRef = useRef(new Set());
 
@@ -356,7 +355,7 @@ const gravity = sila * currentGravity.current;
           })
           
         );
-      }, 16);
+      }, 5);
   
       return () => clearInterval(interval);
     }
@@ -413,7 +412,7 @@ const gravity = sila * currentGravity.current;
             wall.left < window.innerWidth
         );
       });
-    }, 16);
+    }, 5);
   
     return () => clearInterval(interval);
   }, [lvl]);
@@ -463,13 +462,11 @@ useEffect(() => {
 
         if (isOverBoss) {
           console.log("hit bullet", i);
-          setBosshp(prev => prev - 1);
+          setBosshp(prev => prev - 3);
         }
       }
     });
-
-  }, 16);
-
+  }, 5);
 
   return () => clearInterval(interval);
 }, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
@@ -567,101 +564,118 @@ useEffect(() => {
 
 
 function startGasterWaves() {
+  if (wave3Ref.current) {
+
+
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 50, left: 200, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 600, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1000, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1400, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1800, height: 400, width: 400, rotate: true },
+      ]);
+    }, 0);
+  
+    // Wave 2
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 50, left: 0, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 400, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 800, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1200, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1600, height: 400, width: 400, rotate: true },
+      ]);
+    }, 1500);
+    console.log(wave2 + "fff")
+    if (wave3Ref.current) {
+    // Wave 3
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 100, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 300, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 700, left: 1600, height: 400, width: 400, rotate: false },
+      ]);
+    }, 3000);
+  
+    // Wave 4
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 0, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 250, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 750, left: 1600, height: 400, width: 400, rotate: false },
+      ]);
+    }, 4500);
+    }
+  
+
+  }
   // Wave 1
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 50, left: 200, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 600, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1000, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1400, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1800, height: 400, width: 400, rotate: true },
-    ]);
-  }, 0);
-
-  // Wave 2
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 50, left: 0, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 400, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 800, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1200, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1600, height: 400, width: 400, rotate: true },
-    ]);
-  }, 1500);
-
-  // Wave 3
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 100, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 300, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 700, left: 1600, height: 400, width: 400, rotate: false },
-    ]);
-  }, 3000);
-
-  // Wave 4
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 0, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 250, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 750, left: 1600, height: 400, width: 400, rotate: false },
-    ]);
-  }, 4500);
+  
 
   // 🔁 Repeat after full cycle (e.g. after 6 seconds)
-  setTimeout(() => {
-    startGasterWaves();
-  }, 6000); 
-}
+  if (wave3Ref.current) {
+    setTimeout(() => {
+      startGasterWaves();
+    }, 6000); 
+  }
 
+}
 useEffect(() => {
+
   let wallspeed = 3
-  let animplayed = false
+
   if (lvl !== 20) return;
 
 
-  if (bosshp < 400 && bosshp > 300  && !wave2) {
+  if (bosshp < 400 && bosshp > 300  && !wave3Ref.current) {
     wallspeed = 2
-  } else if (bosshp <= 300 && bosshp > 100  && !wave2) {
+  } else if (bosshp <= 300 && bosshp > 100  && !wave3Ref.current) {
     wallspeed = 1
   }
   
 
-  if (bosshp < 300 && !wave2) {
+  if (bosshp < 300 && !wave3Ref.current) {
 
   } else {
     setWalls2([])
   }
-  if (bosshp < 300 && wave2) {
 
-  }
-  if (bosshp < 0) {
-    if (!wave2) {
+  if (bosshp < 0 && !wave3Ref.current) {
+
+      wave3Ref.current = true
+      setWave2(true)
       setElements("visible")
       setElements2("hidden")
       setBosshp(500); // reset boss HP
       startGasterWaves(); // begin repeating wave pattern
-    }
-    setWave2(true)
+      setWalls([
+        { left: 0,     top: 0   ,  width: 2000,   height: 120 },
+        { left: 0,     top: 880   ,  width: 2000,   height: 120 },
+      ])
+    
+
+
 
   } else {
     
-    if (bosshp < 300 && wave2) {
+    if (bosshp < 300 && wave3Ref.current) {
       wallspeed = 7;
   
       if (time % wallspeed === 0 && time > wallspeed + lastSpawnedTimeRef.current && start2) {
         const newWall = {
           left: 1600,
           top: bossY + 100,
-          width: 50,
-          height: 150,
-          dy: -3,
+          width: 100,
+          height: 500,
+          dy: -4,
           up: false,
           bullet: false,
         };
   
-        addWall(newWall);
+        setWalls(prevWalls => [...prevWalls, newWall]);
         lastSpawnedTimeRef.current = time;
       }
   
@@ -677,7 +691,7 @@ useEffect(() => {
           bullet: false,
         };
   
-        addWall(newWall);
+        setWalls(prevWalls => [...prevWalls, newWall]);
         lastSpawnedTimeRef.current = time;
       }
     }
@@ -685,7 +699,7 @@ useEffect(() => {
 
   
 
-}, [lvl, bossY, time]);
+}, [lvl, bossY, time,bosshp,wave2]);
 
 
 
@@ -694,8 +708,12 @@ useEffect(() => {
 
 
   const handleClick = () => {
+
     if (lvl == 20) {
-      addWall({ left: posX + 50, top: fakePosY, width: 50, height: 10, dy: 10, up: false, bullet: true });
+      setWalls(prevWalls => [
+        ...prevWalls,
+        { left: posX + 50, top: fakePosY, width: 50, height: 10, dy: 10, up: false, bullet:true}
+      ]);
     }
     if ((lvl == 14 || lvl == 15 ) && start2) {
       if ((Math.abs(velocity.x)< 0.1 && Math.abs(velocity.y) < 0.1)) {
@@ -706,7 +724,10 @@ const forceMultiplier = 0.1;
 
 // ⛔ Max launch speed (adjust as needed)
 const maxSpeed = 25;
-
+setIloscruchow(prev => prev -1)
+if (iloscruchow == -1) {
+  die()
+}
 // Final velocity (clamped)
 let vx = dx * forceMultiplier;
 let vy = dy * forceMultiplier;
@@ -754,7 +775,7 @@ setVelocity({ x: vx, y: vy });
       
 
     }
-    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave2) && start2) {
+    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave3Ref.current) && start2) {
       if (elements == "hidden") {
         setElements("visible");
         setElements2("hidden")
@@ -777,10 +798,8 @@ setVelocity({ x: vx, y: vy });
           if (index === 0 ) {
 
             setElements3("visible")
-            setClicked1(img("redyes.png"));
-
             setElements("visible")
-
+            setClicked1("redyes.png");
             setVisible2("visible");
             start()
             setStart2(true)
@@ -799,7 +818,7 @@ setVelocity({ x: vx, y: vy });
             }
             
           } else if (index === 1 && visible2 == "visible") {
-            setClicked2(img("redyes.png"));
+            setClicked2("redyes.png");
             setVisible3("visible");
             if (lvl == 6) {
               setMousesize(80)
@@ -809,7 +828,7 @@ setVelocity({ x: vx, y: vy });
               setElements("hidden")
             }
           } else if (index === 2 && visible3 == "visible") {
-            setClicked3(img("redyes.png"));
+            setClicked3("redyes.png");
             setVisible4("visible");
             if (lvl == 6) {
               setMousesize(200)
@@ -818,7 +837,7 @@ setVelocity({ x: vx, y: vy });
             }
 
           } else if (index === 3 && visible4 == "visible") {
-            setClicked4(img("redyes.png"));
+            setClicked4("redyes.png");
             setElements("hidden")
             setStart2(false)
             setLight(false)
@@ -1004,10 +1023,10 @@ setVelocity({ x: vx, y: vy });
   useEffect(() => {
     if (
       (
-      clicked1 === img("redyes.png") &&
-      clicked2 === img("redyes.png") &&
-      (clicked3 === img("redyes.png") || buttons[2].dis == true) &&
-      (clicked4 === img("redyes.png") || buttons[3].dis == true)) || cheat
+      clicked1 === "redyes.png" &&
+      clicked2 === "redyes.png" &&
+      (clicked3 === "redyes.png" || buttons[2].dis == true) &&
+      (clicked4 === "redyes.png" || buttons[3].dis == true)) || cheat
     ) {
       setLvl(prev => {
         const newLvl = prev + 1;
@@ -1321,7 +1340,7 @@ setWalls([
                     break;
                     case 15:
                       
-                      setIloscruchow(9)
+                      setIloscruchow(8)
                       setWalls([
   { id: 'w1', left: 400, top: 0, width: 100, height: 300, dy: 2, up: true },
   { id: 'w2', left: 600, top: 0, width: 100, height: 300, dy: 5, up: true },
@@ -1524,10 +1543,10 @@ setWalls([
           default:
             break;
         }
-        setClicked1(img("redno.png"))
-        setClicked2(img("redno.png"))
-        setClicked3(img("redno.png"))
-        setClicked4(img("redno.png"))
+        setClicked1("redno.png")
+        setClicked2("redno.png")
+        setClicked3("redno.png")
+        setClicked4("redno.png")
   
         return newLvl;
       });
@@ -1557,6 +1576,7 @@ setWalls([
 
   }
   const die = () => {
+    wave3Ref.current = false
     setVelocity({x:0,y:0})
     if (lvl == 19) {
       setLight(false)
@@ -1588,10 +1608,10 @@ setWalls([
     setElements3("hidden")
     setClicked3("hidden")
     setElements("hidden")
-    setClicked1(img("redno.png"))
-    setClicked2(img("redno.png"))
-    setClicked3(img("redno.png"))
-    setClicked4(img("redno.png"))
+    setClicked1("redno.png")
+    setClicked2("redno.png")
+    setClicked3("redno.png")
+    setClicked4("redno.png")
     setVisible2("hidden")
     setVisible3("hidden")
     setVisible4("hidden")
@@ -1646,7 +1666,7 @@ setWalls([
   >
     <img
       style={{height:250,transform: blaster.rotate ?  "none" : "rotate(90deg)"}}
-      src={img("gasteropen.png")}
+      src="gasteropen.png"
     />
   </div>
 ))}
@@ -1803,7 +1823,7 @@ setWalls([
       {/* Fake cursor */}
       <img 
         id='cursor'
-        src={img("cursor.png")}
+        src="cursor.png"
         alt="custom cursor"
         style={{
           width: mousesize,
@@ -1818,7 +1838,7 @@ setWalls([
       />
             <img 
         id='cursor2'
-        src={img("cursor.png")}
+        src="cursor.png"
         style={{
           width: 200,
           height:200 * 1.42 ,
@@ -1832,7 +1852,7 @@ setWalls([
       />
 <img
   id='light'
-  src={img("light.png")}
+  src="light.png"
   alt="custom cursor"
   style={{
     visibility: light ? 'visible':'hidden' ,
@@ -1858,7 +1878,7 @@ setWalls([
       border: "none"
     }}
   >
-    <img id="logo" src={img("LOGO.png")} alt="Logo" />
+    <img id="logo" src="LOGO.png" alt="Logo" />
   </button>
 
   <br />
@@ -1874,7 +1894,7 @@ setWalls([
     }}
   >
     <img 
-      src={img("redno.png")}
+      src="redno.png"
       alt="Red No"
       style={{
         backgroundColor: "#2b3b35",
@@ -2060,7 +2080,7 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
 
 
 }}>POZOSTAŁE RUCHU {iloscruchow}</h1>
-<img src={img('nowifi.png')} style={{
+<img src='nowifi.png' style={{
   height:200,
   zIndex:9995,
 
@@ -2073,4 +2093,4 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-window.App = App;
+export default App;
