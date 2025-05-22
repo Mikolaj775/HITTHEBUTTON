@@ -10,6 +10,7 @@ const App = () => {
   const [fakePosX, setFakePosX] = useState(0);
   const [fakePosY, setFakePosY] = useState(0);
 
+  const wave3Ref = useRef(false)
   
   const [iloscruchow,setIloscruchow] = useState(5)
 
@@ -29,7 +30,13 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   const fanRefs = useRef([]);
   const [ping,setPing] = useState(1)
   const [walls, setWalls] = useState([
-
+                        { left: "0vw",     top: "0vh",     width: "100vw",   height: "5.03vh" },
+                        { left: "0vw",     top: "94.97vh", width: "100vw",   height: "5.03vh" },
+                        { left: "0vw",     top: "0vh",     width: "3.13vw",  height: "100vh" },
+                        { left: "97.40vw", top: "0vh",     width: "3.13vw",  height: "100vh" },
+                        { left: "78.13vw", top: "20.12vh", width: "7.81vw",  height: "80.48vh" },
+                        { left: "0vw",     top: "60.36vh", width: "62.50vw", height: "15.09vh" },
+                        { left: "15.63vw", top: "20.12vh", width: "62.50vw", height: "15.09vh" },
   ]);
   const [cheat,setCheat] = useState(false)
   const [updated,setUpdated] = useState(false)
@@ -339,8 +346,7 @@ const gravity = sila * currentGravity.current;
                 return { ...wall, dy: -(wall.dy || 0) };
               }
             }
-            setPing(ping * -1)
-            console.log(ping)
+
               return { ...wall, top: newTop };
             }
 
@@ -439,7 +445,7 @@ useEffect(() => {
 
         const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-        if (opacity > 0.6 && isOverWall && (elements === "visible" || lvl === 12)) {
+        if ((opacity > 0.6 || lvl != 20) && isOverWall && (elements === "visible" || lvl === 12)) {
           die();
         }
       } else {
@@ -450,20 +456,20 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX - 200 <= bounds.right &&
+          bossX  <= bounds.right &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
         if (isOverBoss) {
           console.log("hit bullet", i);
-          setBosshp(prev => prev - 1);
+          setBosshp(prev => prev - 3);
         }
       }
     });
   }, 5);
 
   return () => clearInterval(interval);
-}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
+}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
 
 
 
@@ -519,9 +525,6 @@ const lastSpawnedTimeRef = useRef(null);
 
 
 
-const spawnedWallsRef = useRef(new Set());
-
-const timersRef = useRef([]);
 
 useEffect(() => {
   if (gaster.length === 0) return;
@@ -561,96 +564,113 @@ useEffect(() => {
 
 
 function startGasterWaves() {
+  if (wave3Ref.current) {
+
+
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 50, left: 200, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 600, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1000, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1400, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1800, height: 400, width: 400, rotate: true },
+      ]);
+    }, 0);
+  
+    // Wave 2
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 50, left: 0, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 400, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 800, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1200, height: 400, width: 400, rotate: true },
+        { id: Date.now() + Math.random(), top: 50, left: 1600, height: 400, width: 400, rotate: true },
+      ]);
+    }, 1500);
+    console.log(wave2 + "fff")
+    if (wave3Ref.current) {
+    // Wave 3
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 100, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 300, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 700, left: 1600, height: 400, width: 400, rotate: false },
+      ]);
+    }, 3000);
+  
+    // Wave 4
+    setTimeout(() => {
+      setGaster([
+        { id: Date.now() + Math.random(), top: 0, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 250, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
+        { id: Date.now() + Math.random(), top: 750, left: 1600, height: 400, width: 400, rotate: false },
+      ]);
+    }, 4500);
+    }
+  
+
+  }
   // Wave 1
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 50, left: 200, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 600, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1000, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1400, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1800, height: 400, width: 400, rotate: true },
-    ]);
-  }, 0);
-
-  // Wave 2
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 50, left: 0, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 400, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 800, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1200, height: 400, width: 400, rotate: true },
-      { id: Date.now() + Math.random(), top: 50, left: 1600, height: 400, width: 400, rotate: true },
-    ]);
-  }, 1500);
-
-  // Wave 3
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 100, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 300, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 700, left: 1600, height: 400, width: 400, rotate: false },
-    ]);
-  }, 3000);
-
-  // Wave 4
-  setTimeout(() => {
-    setGaster([
-      { id: Date.now() + Math.random(), top: 0, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 250, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 500, left: 1600, height: 400, width: 400, rotate: false },
-      { id: Date.now() + Math.random(), top: 750, left: 1600, height: 400, width: 400, rotate: false },
-    ]);
-  }, 4500);
+  
 
   // 🔁 Repeat after full cycle (e.g. after 6 seconds)
-  setTimeout(() => {
-    startGasterWaves();
-  }, 6000); 
-}
+  if (wave3Ref.current) {
+    setTimeout(() => {
+      startGasterWaves();
+    }, 6000); 
+  }
 
+}
 useEffect(() => {
+
   let wallspeed = 3
-  let animplayed = false
+
   if (lvl !== 20) return;
 
 
-  if (bosshp < 400 && bosshp > 300  && !wave2) {
+  if (bosshp < 400 && bosshp > 300  && !wave3Ref.current) {
     wallspeed = 2
-  } else if (bosshp <= 300 && bosshp > 100  && !wave2) {
+  } else if (bosshp <= 300 && bosshp > 100  && !wave3Ref.current) {
     wallspeed = 1
   }
   
 
-  if (bosshp < 300 && !wave2) {
+  if (bosshp < 300 && !wave3Ref.current) {
 
   } else {
     setWalls2([])
   }
-  if (bosshp < 300 && wave2) {
 
-  }
-  if (bosshp < 0) {
-    if (!wave2) {
+  if (bosshp < 0 && !wave3Ref.current) {
+
+      wave3Ref.current = true
+      setWave2(true)
       setElements("visible")
       setElements2("hidden")
       setBosshp(500); // reset boss HP
       startGasterWaves(); // begin repeating wave pattern
-    }
-    setWave2(true)
+      setWalls([
+        { left: 0,     top: 0   ,  width: 2000,   height: 120 },
+        { left: 0,     top: 880   ,  width: 2000,   height: 120 },
+      ])
+    
+
+
 
   } else {
     
-    if (bosshp < 300 && wave2) {
+    if (bosshp < 300 && wave3Ref.current) {
       wallspeed = 7;
   
       if (time % wallspeed === 0 && time > wallspeed + lastSpawnedTimeRef.current && start2) {
         const newWall = {
           left: 1600,
           top: bossY + 100,
-          width: 50,
-          height: 150,
-          dy: -3,
+          width: 100,
+          height: 500,
+          dy: -4,
           up: false,
           bullet: false,
         };
@@ -679,7 +699,7 @@ useEffect(() => {
 
   
 
-}, [lvl, bossY, time]);
+}, [lvl, bossY, time,bosshp,wave2]);
 
 
 
@@ -697,15 +717,29 @@ useEffect(() => {
     }
     if ((lvl == 14 || lvl == 15 ) && start2) {
       if ((Math.abs(velocity.x)< 0.1 && Math.abs(velocity.y) < 0.1)) {
-        const dx = (fakePosX + mousesize/2) - posX;
-        const dy = (fakePosY + mousesize*0.71) - posY;
-        setIloscruchow(iloscruchow - 1)
-        if (iloscruchow == 0) {
-          die()
-        }
-      
-        const forceMultiplier = 0.1; // dopasuj
-        setVelocity({ x: dx * forceMultiplier, y: dy * forceMultiplier });
+let dx = (fakePosX + mousesize/2) - posX;
+let dy = (fakePosY + mousesize*0.71) - posY;
+
+const forceMultiplier = 0.1;
+
+// ⛔ Max launch speed (adjust as needed)
+const maxSpeed = 25;
+setIloscruchow(prev => prev -1)
+if (iloscruchow == -1) {
+  die()
+}
+// Final velocity (clamped)
+let vx = dx * forceMultiplier;
+let vy = dy * forceMultiplier;
+
+const speed = Math.sqrt(vx * vx + vy * vy);
+if (speed > maxSpeed) {
+  const scale = maxSpeed / speed;
+  vx *= scale;
+  vy *= scale;
+}
+
+setVelocity({ x: vx, y: vy });
       }
 
 
@@ -741,7 +775,7 @@ useEffect(() => {
       
 
     }
-    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave2) && start2) {
+    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave3Ref.current) && start2) {
       if (elements == "hidden") {
         setElements("visible");
         setElements2("hidden")
@@ -762,8 +796,13 @@ useEffect(() => {
 
         if (isOverButton) {
           if (index === 0 ) {
+
             setElements3("visible")
+
             setClicked1("public/redyes.png");
+
+            setElements("visible")
+
             setVisible2("visible");
             start()
             setStart2(true)
@@ -998,7 +1037,8 @@ useEffect(() => {
         setVisible2(cheat ? "visible" : "hidden")
         setVisible3(cheat ? "visible" : "hidden")
         setVisible4(cheat ? "visible" : "hidden")
-
+        setFans([])
+        setLight(false)
         switch (newLvl) {
           case 2:
             setMulti(1)
@@ -1117,6 +1157,7 @@ useEffect(() => {
               
             break;
             case 8:
+              
               setMulti(1)
               setWalls([
                 { left: "18.23vw", top: "0vh", width: "10.42vw", height: "100.60vh" },
@@ -1167,8 +1208,8 @@ useEffect(() => {
                     { left: "35.16vw", top: "18.11vh", width: "9.38vw", height: "81.49vh" },
                     { left: "53.91vw", top: "0vh", width: "9.38vw", height: "100.60vh" },
                     { left: "72.66vw", top: "0vh", width: "9.38vw", height: "100.60vh" },
-                    { left: "0vw", top: "0vh", width: "93.75vw", height: "0.90vh" },
-                    { left: "0vw", top: "99.60vh", width: "93.75vw", height: "0.90vh" },
+                    { left: "0vw", top: "0vh", width: "100vw", height: "0.90vh" },
+                    { left: "0vw", top: "99vh", width: "100vw", height: "0.90vh" },
                   ]);
                   setButtons([
                     { x: "10.42vw", y: "40.24vh", dis: false },
@@ -1179,6 +1220,8 @@ useEffect(() => {
                   setWalls([
                     { left: "35.16vw", top: "18.11vh", width: "9.38vw", height: "81.49vh" },
                     { left: "16.41vw", top: "0vh", width: "9.38vw", height: "63.38vh" },
+                    { left: "0vw", top: "0vh", width: "100vw", height: "0.90vh" },
+                    { left: "0vw", top: "99vh", width: "100vw", height: "0.90vh" },
                   ]);
                   
                   break;
@@ -1206,11 +1249,11 @@ useEffect(() => {
                   setVis1("none");
                   setVis2("block");
                   setWalls([
-                    { left: "18.23vw", top: "20.12vh", width: "10.42vw", height: "80.48vh" },
-                    { left: "65.10vw", top: "20.12vh", width: "10.42vw", height: "80.48vh" },
-                    { left: "41.67vw", top: "0vh", width: "10.42vw", height: "80.48vh" },
-                    { left: "0vw", top: "98.39vh", width: "104.17vw", height: "2.01vh" },
-                    { left: "0vw", top: "0vh", width: "104.17vw", height: "2.01vh" },
+                    {id: "wall1", left: "18.23vw", top: "20.12vh", width: "10.42vw", height: "80.48vh" },
+                    {id: "wall2", left: "65.10vw", top: "20.12vh", width: "10.42vw", height: "80.48vh" },
+                    {id: "wall3", left: "41.67vw", top: "0vh", width: "10.42vw", height: "80.48vh" },
+                    {id: "wall4", left: "0vw", top: "98.39vh", width: "104.17vw", height: "2.01vh" },
+                    {id: "wall5", left: "0vw", top: "0vh", width: "104.17vw", height: "2.01vh" },
                   ]);
                   setButtons([
                     { x: "10.42vw", y: "40.24vh", dis: false },
@@ -1224,14 +1267,44 @@ useEffect(() => {
                     setMulti(1)
                     setVis1("none");
                     setVis2("block");
-                    setWalls([
-                      { left: "0vw", top: "0vh", width: "100vw", height: "5vh" },
-                      { left: "0vw", top: "95vh", width: "100vw", height: "5vh" },
-                      { left: "0vw", top: "0vh", width: "3vw", height: "100vh" },
-                      { left: "97vw", top: "0vh", width: "3vw", height: "100vh" },
-                      { left: "12vw", top: "15vh", width: "35vw", height: "70vh" },
-                      { left: "53vw", top: "15vh", width: "35vw", height: "70vh" },
-                    ]);
+setWalls([
+  {
+    id: 'wall1',
+    left: window.innerWidth * 0.1823,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall2',
+    left: window.innerWidth * 0.6510,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall3',
+    left: window.innerWidth * 0.4167,
+    top: 0,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall4',
+    left: 0,
+    top: window.innerHeight * 0.9839,
+    width: window.innerWidth * 1.0417,
+    height: window.innerHeight * 0.0201
+  },
+  {
+    id: 'wall5',
+    left: 0,
+    top: 0,
+    width: window.innerWidth * 1.0417,
+    height: window.innerHeight * 0.0201
+  }
+]);
+
                     setWalls([
                       { left: 0, top: 0, width: "100vw", height: "5vh" },
                       { left: 0, top: "95vh", width: "100vw", height: "5vh" },
@@ -1248,6 +1321,7 @@ useEffect(() => {
                       { x: "28.65vw", y: "10.06vh", dis: true },
                     ]);
                     break
+                    
                     case 14:
                       setMulti(1)
                       setVis1("none");
@@ -1269,17 +1343,17 @@ useEffect(() => {
                     break;
                     case 15:
                       
-                      setIloscruchow(9)
+                      setIloscruchow(8)
                       setWalls([
-                        { left: 400, top: 0, width: 100, height: 300, dy: 2 ,up:true},
-                        { left: 600, top: 0, width: 100, height: 300, dy: 5 ,up:true},
-                        { left: "65.10vw", top: "15.09vh", width: "26.04vw", height: "70.42vh" },
-                        { left: "0vw",     top: "0vh",     width: "100vw",   height: "1.00vh" },
-                        { left: "0vw",     top: "15.09vh", width: "80.21vw", height: "5.03vh" },
-                        { left: "0vw",     top: "99.40vh", width: "100vw",   height: "1.00vh" },
-                        { left: "0vw",     top: "0vh",     width: "1.04vw",  height: "100vh"  },
-                        { left: "99.40vw", top: "0vh",     width: "1.04vw",  height: "100vh"  },
-                      ]);
+  { id: 'w1', left: 400, top: 0, width: 100, height: 300, dy: 2, up: true },
+  { id: 'w2', left: 600, top: 0, width: 100, height: 300, dy: 5, up: true },
+  { id: 'w3', left: window.innerWidth * 0.6510, top: window.innerHeight * 0.1509, width: window.innerWidth * 0.2604, height: window.innerHeight * 0.7042 },
+  { id: 'w4', left: 0, top: 0, width: window.innerWidth, height: window.innerHeight * 0.01 },
+  { id: 'w5', left: 0, top: window.innerHeight * 0.1509, width: window.innerWidth * 0.8021, height: window.innerHeight * 0.0503 },
+  { id: 'w6', left: 0, top: window.innerHeight * 0.9940, width: window.innerWidth, height: window.innerHeight * 0.01 },
+  { id: 'w7', left: 0, top: 0, width: window.innerWidth * 0.0204, height: window.innerHeight },
+  { id: 'w8', left: window.innerWidth * 0.9940, top: 0, width: window.innerWidth * 0.0104, height: window.innerHeight },
+]);
                       setButtons([
                         { x: "10.42vw", y: "45.27vh", dis: false },
                         { x: "52.08vw", y: "45.27vh", dis: false },
@@ -1293,14 +1367,40 @@ useEffect(() => {
                         { x: 1750, y: 450, sizex: 200, sizey: 50, strx: -0.05, stry: 0.3 },
 
                       ])
+                      console.log("Visibility:", elements, elements2);
                     break;
                     case 16:
-                      setWalls([
-                        { left: "99vw",    top: "0vh",     width: "1.04vw",  height: "100vh" },
-                        { left: "20.83vw", top: "30.18vh", width: "7.81vw",  height: "30.18vh" },
-                        { left: "41.67vw", top: "40.24vh", width: "15.63vw", height: "15.09vh" },
-                        { left: "72.92vw", top: "20.12vh", width: "7.81vw",  height: "80.48vh" },
-                      ]);
+setWalls([
+  {
+    id: 'wall1',
+    left: window.innerWidth * 0.99,
+    top: 0,
+    width: window.innerWidth * 0.0104,
+    height: window.innerHeight
+  },
+  {
+    id: 'wall2',
+    left: window.innerWidth * 0.2083,
+    top: window.innerHeight * 0.3018,
+    width: window.innerWidth * 0.0781,
+    height: window.innerHeight * 0.3018
+  },
+  {
+    id: 'wall3',
+    left: window.innerWidth * 0.4167,
+    top: window.innerHeight * 0.4024,
+    width: window.innerWidth * 0.1563,
+    height: window.innerHeight * 0.1509
+  },
+  {
+    id: 'wall4',
+    left: window.innerWidth * 0.7292,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.0781,
+    height: window.innerHeight * 0.8048
+  }
+]);
+
                       setFans([
                         { x: "0vw",    y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.05, stry: 0 },
                         { x: "25vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.10, stry: 0 },
@@ -1313,19 +1413,79 @@ useEffect(() => {
                         { x: "52.08vw", y: "85.51vh", dis: false },
                         { x: "93.75vw", y: "45.27vh", dis: false },
                       ]);
+                      console.log("Visibility:", elements, elements2);
                     break;
                     case 17:
-                      setWalls([
-                        { left: "0vw",     top: "0vh",     width: "100vw",   height: "5.03vh" },
-                        { left: "0vw",     top: "94.97vh", width: "100vw",   height: "5.03vh" },
-                        { left: "0vw",     top: "0vh",     width: "3.13vw",  height: "100vh" },
-                        { left: "97.40vw", top: "0vh",     width: "3.13vw",  height: "100vh" },
-                        { left: "78.13vw", top: "20.12vh", width: "7.81vw",  height: "80.48vh" },
-                        { left: "0vw",     top: "60.36vh", width: "62.50vw", height: "15.09vh" },
-                        { left: "15.63vw", top: "20.12vh", width: "62.50vw", height: "15.09vh" },
-                        { left: 0, top: 350, width: 200, height: 125, dy: 2 ,up:false},
-                        { left: 1700, top: 475, width: 200, height: 125, dy: 2 ,up:false},
-                      ]);
+setWalls([
+  {
+    id: 'w0',
+    left: 0,
+    top: 0,
+    width: window.innerWidth,
+    height: window.innerHeight * 0.0503
+  },
+  {
+    id: 'w1',
+    left: 0,
+    top: window.innerHeight * 0.9497,
+    width: window.innerWidth,
+    height: window.innerHeight * 0.0503
+  },
+  {
+    id: 'w2',
+    left: 0,
+    top: 0,
+    width: window.innerWidth * 0.0313,
+    height: window.innerHeight
+  },
+  {
+    id: 'w3',
+    left: window.innerWidth * 0.9740,
+    top: 0,
+    width: window.innerWidth * 0.0313,
+    height: window.innerHeight
+  },
+  {
+    id: 'w4',
+    left: window.innerWidth * 0.7813,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.0781,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'w5',
+    left: 0,
+    top: window.innerHeight * 0.6036,
+    width: window.innerWidth * 0.625,
+    height: window.innerHeight * 0.1509
+  },
+  {
+    id: 'w6',
+    left: window.innerWidth * 0.1563,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.625,
+    height: window.innerHeight * 0.1509
+  },
+  {
+    id: 'w7',
+    left: 0,
+    top: 350,
+    width: 200,
+    height: 125,
+    dy: 2,
+    up: false
+  },
+  {
+    id: 'w8',
+    left: 1700,
+    top: 475,
+    width: 200,
+    height: 125,
+    dy: 2,
+    up: false
+  }
+]);
+
                       setFans([])
                       setButtons([
                         { x: "5.21vw",  y: "80.48vh", dis: false },
@@ -1333,11 +1493,12 @@ useEffect(() => {
                         { x: "89.84vw", y: "85.51vh", dis: false },
                         { x: "89.84vw", y: "85.51vh", dis: true  },
                       ]);
+                      console.log("Visibility:", elements, elements2);
                       break;
                     case 18:
                       setSila(0.2)
                       setWalls([
-                        { left: 0, top: 990, width: 2000, height: 10 },
+                        { left: 0, top: "98vh", width: 2000, height: "2vh" },
                         { left: 300, top: 0, width: 150, height: 200 },
                         { left: 300, top: 400, width: 150, height: 800 },
                         { left: 750, top: 0, width: 150, height: 600 },
@@ -1347,7 +1508,7 @@ useEffect(() => {
 
                       ])
                     setFans([
-                      { x: 0, y: 400 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
+                      { x: 0, y: 500 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
                       { x: 450, y: 400 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
                       { x: 0, y: 0 ,sizex: 2000, sizey: 1, strx: 0, stry: 0 },
                       { x: 1050, y: 800 ,sizex: 150, sizey: 800, strx: 0, stry: -3 },
@@ -1373,7 +1534,7 @@ useEffect(() => {
             ])
             break;
             case 20:
-
+              setBosshp(500)
               setFans([])
               setWalls([
                 { left: 0,     top: 0   ,  width: 2000,   height: 120 },
@@ -1418,6 +1579,8 @@ useEffect(() => {
 
   }
   const die = () => {
+    wave3Ref.current = false
+    setVelocity({x:0,y:0})
     if (lvl == 19) {
       setLight(false)
       setCheat(true)
@@ -1490,6 +1653,7 @@ useEffect(() => {
       />
 {gaster.map((blaster, index) => (
   <div
+
     key={blaster.id}
     ref={(el) => (gasterRefs.current[index] = el)}
     className={"gasterblaster gaster-enter"}
@@ -1512,7 +1676,7 @@ useEffect(() => {
       {/*WALLS */}
       {walls.map((wall, index) => (
   <div
-    key={wall.id}
+    key= {lvl == 20 ? wall.id : index}
     ref={(el) => (wallRefs.current[index] = el)}
     className={wall.blaster ? "gaster-wall" : ""}
     style={{
@@ -1694,7 +1858,7 @@ useEffect(() => {
   src="public/light.png"
   alt="custom cursor"
   style={{
-    visibility: "hidden",
+    visibility: light ? 'visible':'hidden' ,
     width: `calc(200vw * ${lightsize})`,
     height: `calc(200vh * ${lightsize})`,
     position: 'absolute',
@@ -1866,12 +2030,14 @@ useEffect(() => {
   backgroundColor: wave2 ?  "rgb(255, 136, 0)" : "rgb(151, 0, 0)",
   width:bosshp,
   height:50,
+  visibility: lvl == 20 ? 'visible' : 'hidden',
 left:`calc(34% + 5px)` ,
 top: 15,
   position:"absolute",
   zIndex:9
 }}></div>
 <div id='HP' style={{
+    visibility: lvl == 20 ? 'visible' : 'hidden',
   backgroundColor: "gray",
   width:500,
   height:50,
@@ -1883,6 +2049,7 @@ top: 15,
 }}></div>
 <h1
 style={{
+  
   position:"absolute",
   top:0,
   left:0
