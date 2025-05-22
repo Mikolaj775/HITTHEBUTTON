@@ -1,3 +1,5 @@
+
+// React and ReactDOM are loaded via CDN in index.html
 const { useState, useEffect, useRef, use } = React;
 
 const App = () => {
@@ -1928,3 +1930,4 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
+window.App = App;
