@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, use } from 'react';
 import './App.css';
-import { computeHeadingLevel } from '@testing-library/dom';
 
 const App = () => {
   //czas
