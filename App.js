@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, use } from 'react';
-import './App.css';
+const { useState, useEffect, useRef, use } = React;
 
 const App = () => {
   //czas
@@ -1929,4 +1928,3 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-export default App;
