@@ -87,7 +87,7 @@ const animationRef = useRef(null);
   const [elements, setElements] = useState("hidden");
   const [elements3, setElements3] = useState("hidden");
 
-  const [sila,setSila] = useState(0.3)
+  const [sila,setSila] = useState(0.5)
 
   const [lvl,setLvl] = useState(0)
   const [time,setTime] = useState(0)
@@ -124,9 +124,9 @@ const animationRef = useRef(null);
   
       const fall = () => {
         // Smooth transition
-currentGravity.current += (targetGravity.current - currentGravity.current) * sila * 1.5;
+currentGravity.current += (targetGravity.current - currentGravity.current) * sila;
 
-const gravity = sila * currentGravity.current * 1.5;
+const gravity = sila * currentGravity.current;
 
   
         if (lvl === 4 || lvl == 18) {
@@ -412,9 +412,7 @@ const gravity = sila * currentGravity.current * 1.5;
   // Check collision with wall
 // Continuous collision detection for moving walls
 useEffect(() => {
-  let animationFrameId;
-
-  const checkCollisions = () => {
+  const interval = setInterval(() => {
     wallRefs.current.forEach((wallEl, i) => {
       if (!wallEl) return;
 
@@ -426,7 +424,6 @@ useEffect(() => {
 
       const bounds = wallEl.getBoundingClientRect();
 
-      // ✅ ONLY change this block for non-bullet collisions
       if (!wall.bullet) {
         const isOverWall =
           fakePosX >= bounds.left - mousesize &&
@@ -436,15 +433,10 @@ useEffect(() => {
 
         const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-        if (
-          (opacity > 0.6 || (lvl !== 20 && lvl !== 19)) &&
-          isOverWall &&
-          (elements === "visible" || lvl === 12)
-        ) {
+        if ((opacity > 0.6 || (lvl != 20 && lvl != 19)) && isOverWall && (elements === "visible" || lvl === 12)) {
           die();
         }
       } else {
-        // 🔫 Leave bullet logic untouched
         if (collidedBulletsRef.current.has(i)) return;
 
         const bossX = 1600;
@@ -452,7 +444,7 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX <= bounds.right + 200 &&
+          bossX  <= bounds.right + 200 &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
@@ -462,16 +454,10 @@ useEffect(() => {
         }
       }
     });
+  }, 5);
 
-    animationFrameId = requestAnimationFrame(checkCollisions);
-  };
-
-  checkCollisions(); // Initial call
-
-  return () => cancelAnimationFrame(animationFrameId);
-}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
-
-
+  return () => clearInterval(interval);
+}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
 
 
 
@@ -810,12 +796,12 @@ setVelocity({ x: vx, y: vy });
 
     }
     if (lvl == 5 || lvl == 10) {
-      if (lvl == 10  && start2) {
+      if (lvl == 10 ) {
         targetGravity.current = -1
       }
-      if (elements == "visible" && elements2=="hidden" && lvl == 10  && start2) {
+      if (elements == "visible" && elements2=="hidden" && lvl == 10) {
         targetGravity.current = 1;
-      } else if (elements2 == "visible" && elements=="hidden"  && start2) {
+      } else if (elements2 == "visible" && elements=="hidden") {
         targetGravity.current = -1;
       }
       if (lvl == 5) {
@@ -830,8 +816,8 @@ setVelocity({ x: vx, y: vy });
       
 
     }
-    if (lvl == 8 || lvl == 10  && start2 || (bosshp < 300  && !wave3Ref.current)) {
-      if (elements == "hidden"  && start2) {
+    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave3Ref.current) && start2) {
+      if (elements == "hidden") {
         setElements("visible");
         setElements2("hidden")
         
