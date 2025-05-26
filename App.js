@@ -171,36 +171,70 @@ const gravity = sila * currentGravity.current;
 
   
   useEffect(() => {
-    let animationFrame;
+    if (start2) {
+      let animationFrame;
   
-    const friction = 0.98;
-
+      const friction = 0.98;
   
-    const animate = () => {
-      setFakePosX(prev => {
-        const newX = prev + velocity.x;
-        return newX;
-      });
-      setFakePosY(prev => {
-        const newY = prev + velocity.y;
-        return newY;
-      });
-
-      setVelocity(prev => ({
-        x: prev.x * friction,
-        y: prev.y * friction
-      
-      }));
     
-      // zatrzymanie
-      if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-      animationFrame = requestAnimationFrame(animate);
+      const animate = () => {
+        setFakePosX(prev => {
+          const newX = prev + velocity.x;
+          return newX;
+        });
+        setFakePosY(prev => {
+          const newY = prev + velocity.y;
+          return newY;
+        });
   
-    return () => cancelAnimationFrame(animationFrame);
+        setVelocity(prev => ({
+          x: prev.x * friction,
+          y: prev.y * friction
+        
+        }));
+      
+        // zatrzymanie
+        if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
+          animationFrame = requestAnimationFrame(animate);
+        }
+      };
+  
+        animationFrame = requestAnimationFrame(animate);
+    
+      return () => cancelAnimationFrame(animationFrame);
+    } else {
+      let animationFrame;
+  
+      const friction = 0;
+  
+    
+      const animate = () => {
+        setFakePosX(prev => {
+          const newX = prev + velocity.x;
+          return newX;
+        });
+        setFakePosY(prev => {
+          const newY = prev + velocity.y;
+          return newY;
+        });
+  
+        setVelocity(prev => ({
+          x: prev.x * friction,
+          y: prev.y * friction
+        
+        }));
+      
+        // zatrzymanie
+        if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
+          animationFrame = requestAnimationFrame(animate);
+        }
+      };
+  
+        animationFrame = requestAnimationFrame(animate);
+    
+      return () => cancelAnimationFrame(animationFrame);
+    }
+
   }, [velocity]);
   // Update fake cursor position
   useEffect(() => {
