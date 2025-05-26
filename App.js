@@ -124,9 +124,9 @@ const animationRef = useRef(null);
   
       const fall = () => {
         // Smooth transition
-currentGravity.current += (targetGravity.current - currentGravity.current) * sila;
+currentGravity.current += (targetGravity.current - currentGravity.current) * sila * 1.5;
 
-const gravity = sila * currentGravity.current;
+const gravity = sila * currentGravity.current * 1.5;
 
   
         if (lvl === 4 || lvl == 18) {
