@@ -1871,7 +1871,8 @@ setWalls([
   src="/public/light.png"
   alt="custom cursor"
   style={{
-    visibility: light ? 'visible':'hidden' ,
+    visibility: lvl == 7 ? 'visible':'hidden' ,
+    display: lvl == 7 ? "block" : "none",
     width: `calc(200vw * ${lightsize})`,
     height: `calc(200vh * ${lightsize})`,
     position: 'absolute',
