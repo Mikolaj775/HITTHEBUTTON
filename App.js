@@ -769,6 +769,8 @@ setIloscruchow(prev => prev -1)
 if (iloscruchow == -1) {
   die()
   setVelocity({x:0,y:0})
+  vx = 0
+  vy = 0
 }
 // Final velocity (clamped)
 let vx = dx * forceMultiplier;
