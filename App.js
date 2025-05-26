@@ -837,7 +837,7 @@ setVelocity({ x: vx, y: vy });
 
         if (isOverButton) {
           if (index === 0 ) {
-
+            targetGravity.current = -1
             setElements3("visible")
             setElements("visible")
             setClicked1("/public/redyes.png");
