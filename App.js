@@ -412,30 +412,32 @@ const gravity = sila * currentGravity.current * 1.5;
   // Check collision with wall
 // Continuous collision detection for moving walls
 useEffect(() => {
-  const interval = setInterval(() => {
+  let animationFrameId;
+
+  const checkCollisions = () => {
     wallRefs.current.forEach((wallEl, i) => {
       if (!wallEl) return;
 
-      const wall = walls[i];
-      if (!wall) {
-        console.warn(`⚠️ wall at index ${i} is undefined`);
-        return;
-      }
-
       const bounds = wallEl.getBoundingClientRect();
+      const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-      if (!wall.bullet) {
+      // 🚫 Wall collision (non-bullet)
+      if (!walls[i]?.bullet) {
         const isOverWall =
           fakePosX >= bounds.left - mousesize &&
           fakePosX <= bounds.right &&
           fakePosY >= bounds.top - mousesize * 1.42 &&
           fakePosY <= bounds.bottom;
 
-        const opacity = parseFloat(getComputedStyle(wallEl).opacity);
-
-        if ((opacity > 0.6 || (lvl != 20 && lvl != 19)) && isOverWall && (elements === "visible" || lvl === 12)) {
+        if (
+          (opacity > 0.6 || (lvl !== 20 && lvl !== 19)) &&
+          isOverWall &&
+          (elements === "visible" || lvl === 12)
+        ) {
           die();
         }
+
+      // 🔫 Bullet hit detection (on boss)
       } else {
         if (collidedBulletsRef.current.has(i)) return;
 
@@ -444,20 +446,26 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX  <= bounds.right + 200 &&
+          bossX <= bounds.right + 200 &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
         if (isOverBoss) {
           console.log("hit bullet", i);
           setBosshp(prev => prev - 3);
+          collidedBulletsRef.current.add(i); // Mark as hit
         }
       }
     });
-  }, 5);
 
-  return () => clearInterval(interval);
-}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
+    animationFrameId = requestAnimationFrame(checkCollisions);
+  };
+
+  checkCollisions();
+
+  return () => cancelAnimationFrame(animationFrameId);
+}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
+
 
 
 
