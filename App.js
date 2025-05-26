@@ -418,16 +418,23 @@ useEffect(() => {
     wallRefs.current.forEach((wallEl, i) => {
       if (!wallEl) return;
 
-      const bounds = wallEl.getBoundingClientRect();
-      const opacity = parseFloat(getComputedStyle(wallEl).opacity);
+      const wall = walls[i];
+      if (!wall) {
+        console.warn(`⚠️ wall at index ${i} is undefined`);
+        return;
+      }
 
-      // 🚫 Wall collision (non-bullet)
-      if (!walls[i]?.bullet) {
+      const bounds = wallEl.getBoundingClientRect();
+
+      // ✅ ONLY change this block for non-bullet collisions
+      if (!wall.bullet) {
         const isOverWall =
           fakePosX >= bounds.left - mousesize &&
           fakePosX <= bounds.right &&
           fakePosY >= bounds.top - mousesize * 1.42 &&
           fakePosY <= bounds.bottom;
+
+        const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
         if (
           (opacity > 0.6 || (lvl !== 20 && lvl !== 19)) &&
@@ -436,9 +443,8 @@ useEffect(() => {
         ) {
           die();
         }
-
-      // 🔫 Bullet hit detection (on boss)
       } else {
+        // 🔫 Leave bullet logic untouched
         if (collidedBulletsRef.current.has(i)) return;
 
         const bossX = 1600;
@@ -453,7 +459,6 @@ useEffect(() => {
         if (isOverBoss) {
           console.log("hit bullet", i);
           setBosshp(prev => prev - 3);
-          collidedBulletsRef.current.add(i); // Mark as hit
         }
       }
     });
@@ -461,10 +466,11 @@ useEffect(() => {
     animationFrameId = requestAnimationFrame(checkCollisions);
   };
 
-  checkCollisions();
+  checkCollisions(); // Initial call
 
   return () => cancelAnimationFrame(animationFrameId);
 }, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
+
 
 
 
