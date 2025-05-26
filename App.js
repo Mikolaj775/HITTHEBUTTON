@@ -796,7 +796,7 @@ setVelocity({ x: vx, y: vy });
 
     }
     if (lvl == 5 || lvl == 10) {
-      if (lvl == 10 ) {
+      if (lvl == 10  && start2) {
         targetGravity.current = -1
       }
       if (elements == "visible" && elements2=="hidden" && lvl == 10) {
@@ -816,8 +816,8 @@ setVelocity({ x: vx, y: vy });
       
 
     }
-    if (lvl == 8 || lvl == 10  || (bosshp < 300  && !wave3Ref.current) && start2) {
-      if (elements == "hidden") {
+    if (lvl == 8 || lvl == 10  && start2 || (bosshp < 300  && !wave3Ref.current)) {
+      if (elements == "hidden"  && start2) {
         setElements("visible");
         setElements2("hidden")
         
