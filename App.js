@@ -27,7 +27,6 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   ])
   const gasterRefs = useRef([])
   const fanRefs = useRef([]);
-  const [ping,setPing] = useState(1)
   const [walls, setWalls] = useState([
 
   ]);
@@ -518,7 +517,7 @@ useEffect(() => {
     }
   });
   
-}, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans]);
+}, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans,velocity]);
 
 
 
