@@ -249,6 +249,7 @@ const gravity = sila * currentGravity.current;
   
         if (collided) {
           die();
+          setVelocity({x:0,y:0})
           return; // przerwij update
         }
       }}
@@ -441,6 +442,7 @@ useEffect(() => {
           (elements === "visible" || lvl === 12)
         ) {
           die();
+          setVelocity({x:0,y:0})
         }
       } else {
         // 🔫 Leave bullet logic untouched
@@ -490,6 +492,7 @@ useEffect(() => {
 
     if (isOverWall && elements2 === "visible") {
       die();
+      setVelocity({x:0,y:0})
     }
   });
 
@@ -765,6 +768,7 @@ const maxSpeed = 25;
 setIloscruchow(prev => prev -1)
 if (iloscruchow == -1) {
   die()
+  setVelocity({x:0,y:0})
 }
 // Final velocity (clamped)
 let vx = dx * forceMultiplier;
