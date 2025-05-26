@@ -412,7 +412,9 @@ const gravity = sila * currentGravity.current;
   // Check collision with wall
 // Continuous collision detection for moving walls
 useEffect(() => {
-  const interval = setInterval(() => {
+  let animationFrameId;
+
+  const checkCollisions = () => {
     wallRefs.current.forEach((wallEl, i) => {
       if (!wallEl) return;
 
@@ -424,6 +426,7 @@ useEffect(() => {
 
       const bounds = wallEl.getBoundingClientRect();
 
+      // ✅ ONLY change this block for non-bullet collisions
       if (!wall.bullet) {
         const isOverWall =
           fakePosX >= bounds.left - mousesize &&
@@ -433,10 +436,15 @@ useEffect(() => {
 
         const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-        if ((opacity > 0.6 || (lvl != 20 && lvl != 19)) && isOverWall && (elements === "visible" || lvl === 12)) {
+        if (
+          (opacity > 0.6 || (lvl !== 20 && lvl !== 19)) &&
+          isOverWall &&
+          (elements === "visible" || lvl === 12)
+        ) {
           die();
         }
       } else {
+        // 🔫 Leave bullet logic untouched
         if (collidedBulletsRef.current.has(i)) return;
 
         const bossX = 1600;
@@ -444,7 +452,7 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX  <= bounds.right + 200 &&
+          bossX <= bounds.right + 200 &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
@@ -454,10 +462,14 @@ useEffect(() => {
         }
       }
     });
-  }, 5);
 
-  return () => clearInterval(interval);
-}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
+    animationFrameId = requestAnimationFrame(checkCollisions);
+  };
+
+  checkCollisions(); // Initial call
+
+  return () => cancelAnimationFrame(animationFrameId);
+}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
 
 
 
@@ -514,8 +526,8 @@ useEffect(() => {
         veloyRef.current = fanData.stry === 0 ? 0 : veloyRef.current + fanData.stry * 5;
       } else {
         setVelocity(v => ({
-          x: v.x + fanData.strx,
-          y: v.y + fanData.stry
+          x: velocity.x + fanData.strx,
+          y: velocity.y + fanData.stry
         }));
       }
     }
