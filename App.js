@@ -509,10 +509,11 @@ useEffect(() => {
       if (lvl === 18) {
         veloyRef.current = fanData.stry === 0 ? 0 : veloyRef.current + fanData.stry * 5;
       } else {
-        setVelocity(v => ({
-          x: v.x + fanData.strx,
-          y: v.y + fanData.stry
+        setVelocity(prev => ({
+          x: prev.x + fanData.strx,
+          y: prev.y + fanData.stry
         }));
+        
       }
     }
   });
@@ -834,7 +835,10 @@ setVelocity({ x: vx, y: vy });
 
         if (isOverButton) {
           if (index === 0 ) {
-            if(lvl == 10) {
+            if (!start2) {
+              setVelocity({x:0,y:0})
+            }
+            if(lvl == 10 && !start2) {
               targetGravity.current = -1
             }
             setElements3("visible")
