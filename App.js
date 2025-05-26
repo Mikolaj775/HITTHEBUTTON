@@ -510,30 +510,42 @@ useEffect(() => {
   });
 
   // Interaction with fans
-  fanRefs.current.forEach((fanRef, index) => {
-    const fanData = fans[index];
-    if (!fanRef || !fanData) return;
-  
-    const bounds = fanRef.getBoundingClientRect();
-    const isOverFan =
-      fakePosX >= bounds.left - mousesize &&
-      fakePosX <= bounds.right &&
-      fakePosY >= bounds.top - mousesize * 1.42 &&
-      fakePosY <= bounds.bottom;
-  
-    if (isOverFan && elements3 === "visible") {
-      if (lvl === 18) {
-        veloyRef.current = fanData.stry === 0 ? 0 : veloyRef.current + fanData.stry * 5;
-      } else {
-        setVelocity(v => ({
-          x: v.x + fanData.strx,
-          y: v.y + fanData.stry
-        }));
-      }
-    }
-  });
   
 }, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans]);
+useEffect(() => {
+  let frameId;
+
+  const applyFanForces = () => {
+    fanRefs.current.forEach((fanRef, index) => {
+      const fanData = fans[index];
+      if (!fanRef || !fanData) return;
+
+      const bounds = fanRef.getBoundingClientRect();
+      const isOverFan =
+        fakePosX >= bounds.left - mousesize &&
+        fakePosX <= bounds.right &&
+        fakePosY >= bounds.top - mousesize * 1.42 &&
+        fakePosY <= bounds.bottom;
+
+      if (isOverFan && elements3 === "visible") {
+        if (lvl === 18) {
+          veloyRef.current = fanData.stry === 0 ? 0 : veloyRef.current + fanData.stry * 5;
+        } else {
+          setVelocity(v => ({
+            x: v.x + fanData.strx,
+            y: v.y + fanData.stry
+          }));
+        }
+      }
+    });
+
+    frameId = requestAnimationFrame(applyFanForces);
+  };
+
+  applyFanForces();
+
+  return () => cancelAnimationFrame(frameId);
+}, [fakePosX, fakePosY, mousesize, elements3, lvl, fans]);
 
 
 
@@ -850,10 +862,7 @@ setVelocity({ x: vx, y: vy });
 
         if (isOverButton) {
           if (index === 0 ) {
-            setVelocity(v => ({
-              x: 0,
-              y: 0
-            }));
+
             if(lvl == 10) {
               targetGravity.current = -1
             }
@@ -1588,7 +1597,10 @@ setWalls([
     }
   }, [clicked1, clicked2, clicked3, clicked4,lvl]);
   const start = () => {
-    
+    setVelocity(v => ({
+      x: 0,
+      y: 0
+    }));
     if (lvl == 8 || lvl == 10 && start2) {
       if (elements == "hidden") {
         setElements("visible");
