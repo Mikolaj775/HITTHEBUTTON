@@ -1650,8 +1650,10 @@ setWalls([
   return (
     <div className="App" style={{
       height:"100vh",
+      width:"100vw",
       position: "absolute",
       top:0,
+      left:0,
       backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
       cursor: lvl == 0 ?  "auto" : "none"
     }}>
