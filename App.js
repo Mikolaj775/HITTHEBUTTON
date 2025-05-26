@@ -1386,10 +1386,10 @@ setWalls([
 ]);
 
                       setFans([
-                        { x: "0vw",    y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.05, stry: 0 },
-                        { x: "25vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.10, stry: 0 },
-                        { x: "50vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.12, stry: 0 },
-                        { x: "75vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.15, stry: 0 },
+                        { x: 0,    y: 0,    sizex: 500, sizey: 1000, strx: 0.05, stry: 0 },
+                        { x: 500,   y: 0,    sizex: 500, sizey: 1000, strx: 0.10, stry: 0 },
+                        { x: 1000,   y: 0,    sizex: 500, sizey: 1000, strx: 0.12, stry: 0 },
+                        { x: 1500,   y: 0,    sizex: 500, sizey: 1000, strx: 0.15, stry: 0 },
                       ]);
                       setButtons([
                         { x: "5.21vw",  y: "50.30vh", dis: false },
