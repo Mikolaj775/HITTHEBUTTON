@@ -2,7 +2,7 @@ REACT HIT THE BUTTON GAME
 its a "another level again" type of game with main objective to hit the 4 buttons and main mechanics chenging every level
 it is havily inspired by "just hit the button" that i once played on gx.games but i only copied like 6 out of 20 lvl and i tried to make it a lot harder and its not so pretty like "just hit the button" :(
 
-its not optymized for screens in some levels to i recoment playing on 1920x944 or something like that
+its not optymized for screens in some levels so i recoment playing on 1920x944 or something like that
 
 Link to dowload: https://drive.google.com/file/d/1jSDOev-eKbr_MW7BA6OVgmN6b7vnBKPQ/view?usp=sharing
 
