@@ -19,24 +19,43 @@ i will post now all the types of levels i recomend to not spoil it for yourself
 
 
 -1 normal
+
 -2 added walls
+
 -3 super fast
+
 -4 gravity/jumping
+
 -5 gravity/chenging gravity
+
 -6 chenging sizes
+
 -7 light
+
 -8 chenging dimensions
+
 -9 reverse mouse
+
 -10 chenging gravity + chenging dimensions
+
 -11 movingo blocks
+
 -12 invisible maze
+
 -13 lagging mouse
+
 -14 golf
+
 -15 harder golf
+
 -16 conveyor belt
+
 -17 reversed reversed mouse
+
 -18 jumping on conveyor belts with gravity
+
 -19 gaster blasters
+
 -20 BOSS FIGHT
 
 
