@@ -1,14 +1,17 @@
 REACT HIT THE BUTTON GAME
 its a "another level again" type of game with main objective to hit the 4 buttons and main mechanics chenging every level
-it is havily inspired by "just hit the button" that i once played on gx.games but i only copied like 6 out of 20 lvl and i tried to make it a lot harder
+it is havily inspired by "just hit the button" that i once played on gx.games but i only copied like 6 out of 20 lvl and i tried to make it a lot harder and its not so pretty like "just hit the button" :(
 
-Link to dowload: https://drive.google.com/file/d/1uODv1fYt-AIiShHs9xLfVUBqeEUclzKx/view?usp=sharing
+its not optymized for screens in some levels to i recoment playing on 1920x944 or something like that
+
+Link to dowload: https://drive.google.com/file/d/1jSDOev-eKbr_MW7BA6OVgmN6b7vnBKPQ/view?usp=sharing
 
 it dosnt work on netlify so i made it into app
 
-Version of the game beta 1.4v
+Version of the game beta 1.5v
 
-the boss fight dosnt quite work couse i forgot to chenge damage from testing and now it takes 4 shots to kill him :P
+the boss fight now work taking 250 shots to kill him good luck :P
+
 
 
 
