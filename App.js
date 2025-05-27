@@ -1234,7 +1234,7 @@ setVelocity({ x: vx, y: vy });
                 break;
                 case 10:
                   setMulti(1)
-                  setSila(0.1)
+                  setSila(0.2)
                   setWalls2([
                     { left: "16.41vw", top: "0vh", width: "9.38vw", height: "63.38vh" },
                     { left: "16.41vw", top: "54.33vh", width: "46.88vw", height: "9.05vh" },
