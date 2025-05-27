@@ -1,4 +1,6 @@
-const { useState, useEffect, useRef } = React;
+import React, { useState, useEffect, useRef, use } from 'react';
+import './App.css';
+import { computeHeadingLevel } from '@testing-library/dom';
 
 const App = () => {
   //czas
@@ -27,6 +29,7 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
   ])
   const gasterRefs = useRef([])
   const fanRefs = useRef([]);
+  const [ping,setPing] = useState(1)
   const [walls, setWalls] = useState([
 
   ]);
@@ -51,10 +54,15 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
     
   const [buttons,setButtons] = useState([
-    { x: "10.42vw", y: "42.37vh", dis: false },
-    { x: "33.85vw", y: "42.37vh", dis: false },
-    { x: "57.29vw", y: "42.37vh", dis: false },
-    { x: "80.73vw", y: "42.37vh", dis: false }
+
+  {x:200,y:400,dis:false},
+ {x:650,y:400,dis:false},
+ {x:1100,y:400,dis:false},
+ {x:1550,y:400,dis:false}
+
+
+
+
   ])
   
   const [mousesize,setMousesize] = useState(30)
@@ -70,14 +78,14 @@ const [velocity, setVelocity] = useState({ x: 0, y: 0 });
 
   const veloyRef = useRef(0);
 const animationRef = useRef(null);
-  const [clicked1, setClicked1] = useState("/public/redno.png");
-  const [clicked2, setClicked2] = useState("/public/redno.png");
-  const [clicked3, setClicked3] = useState("/public/redno.png");
-  const [clicked4, setClicked4] = useState("/public/redno.png");
+  const [clicked1, setClicked1] = useState(`${process.env.PUBLIC_URL}/redno.png`);
+  const [clicked2, setClicked2] = useState(`${process.env.PUBLIC_URL}/redno.png`);
+  const [clicked3, setClicked3] = useState(`${process.env.PUBLIC_URL}/redno.png`);
+  const [clicked4, setClicked4] = useState(`${process.env.PUBLIC_URL}/redno.png`);
 
   const collidedBulletsRef = useRef(new Set());
 
-  const [visible2, setVisible2] = useState("hidden");
+  const [visible2, setVisible2] = useState("hidden"); 
   const [visible3, setVisible3] = useState("hidden");
   const [visible4, setVisible4] = useState("hidden");
   
@@ -86,7 +94,7 @@ const animationRef = useRef(null);
   const [elements, setElements] = useState("hidden");
   const [elements3, setElements3] = useState("hidden");
 
-  const [sila,setSila] = useState(0.5)
+  const [sila,setSila] = useState(0.3)
 
   const [lvl,setLvl] = useState(0)
   const [time,setTime] = useState(0)
@@ -106,7 +114,7 @@ const animationRef = useRef(null);
   }, []);
 
   useEffect(() => {
-    if (vis3 == "none") {
+    if (vis3 === "none") {
     let interval = null;
       interval = setInterval(() => {
         setTime(prevTime => prevTime + 1);
@@ -118,17 +126,17 @@ const animationRef = useRef(null);
   }, [vis3]);
   useEffect(() => {
 
-    if ((lvl === 4 || lvl === 5 || lvl == 10 || lvl == 18) && start2 == true) {
+    if ((lvl === 4 || lvl === 5 || lvl === 10 || lvl === 18) && start2 === true) {
       veloyRef.current = 0;
   
       const fall = () => {
         // Smooth transition
-currentGravity.current += (targetGravity.current - currentGravity.current) * sila;
+currentGravity.current += (targetGravity.current - currentGravity.current) * sila * 1.4;
 
-const gravity = sila * currentGravity.current;
+const gravity = sila  * 1.4 * currentGravity.current;
 
   
-        if (lvl === 4 || lvl == 18) {
+        if (lvl === 4 || lvl === 18) {
           if (veloyRef.current > 0) {
             setFakePosY(prevY => {
               if (prevY < window.innerHeight - 20) {
@@ -171,70 +179,36 @@ const gravity = sila * currentGravity.current;
 
   
   useEffect(() => {
-    if (start2) {
-      let animationFrame;
+    let animationFrame;
   
-      const friction = 0.98;
-  
-    
-      const animate = () => {
-        setFakePosX(prev => {
-          const newX = prev + velocity.x;
-          return newX;
-        });
-        setFakePosY(prev => {
-          const newY = prev + velocity.y;
-          return newY;
-        });
-  
-        setVelocity(prev => ({
-          x: prev.x * friction,
-          y: prev.y * friction
-        
-        }));
-      
-        // zatrzymanie
-        if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
-          animationFrame = requestAnimationFrame(animate);
-        }
-      };
-  
-        animationFrame = requestAnimationFrame(animate);
-    
-      return () => cancelAnimationFrame(animationFrame);
-    } else {
-      let animationFrame;
-  
-      const friction = 0;
-  
-    
-      const animate = () => {
-        setFakePosX(prev => {
-          const newX = prev + velocity.x;
-          return newX;
-        });
-        setFakePosY(prev => {
-          const newY = prev + velocity.y;
-          return newY;
-        });
-  
-        setVelocity(prev => ({
-          x: prev.x * friction,
-          y: prev.y * friction
-        
-        }));
-      
-        // zatrzymanie
-        if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
-          animationFrame = requestAnimationFrame(animate);
-        }
-      };
-  
-        animationFrame = requestAnimationFrame(animate);
-    
-      return () => cancelAnimationFrame(animationFrame);
-    }
+    const friction = 0.98;
 
+  
+    const animate = () => {
+      setFakePosX(prev => {
+        const newX = prev + velocity.x;
+        return newX;
+      });
+      setFakePosY(prev => {
+        const newY = prev + velocity.y;
+        return newY;
+      });
+
+      setVelocity(prev => ({
+        x: prev.x * friction,
+        y: prev.y * friction
+      
+      }));
+    
+      // zatrzymanie
+      if (Math.abs(velocity.x) > 0.1 || Math.abs(velocity.y) > 0.1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+
+      animationFrame = requestAnimationFrame(animate);
+  
+    return () => cancelAnimationFrame(animationFrame);
   }, [velocity]);
   // Update fake cursor position
   useEffect(() => {
@@ -259,7 +233,7 @@ const gravity = sila * currentGravity.current;
   
       let tempX = fakePosX;
       let tempY = fakePosY;
-      if (lvl == 13) {
+      if (lvl === 13) {
       for (let i = 0; i < steps; i++) {
         tempX += dx;
         tempY += dy;
@@ -283,7 +257,6 @@ const gravity = sila * currentGravity.current;
   
         if (collided) {
           die();
-          setVelocity({x:0,y:0})
           return; // przerwij update
         }
       }}
@@ -355,14 +328,14 @@ const gravity = sila * currentGravity.current;
   
   //ANIMACJE
   useEffect(() => {
-    if (lvl === 11 || lvl == 15 || lvl == 17) {
+    if (lvl === 11 || lvl === 15 || lvl === 17) {
       const interval = setInterval(() => {
         setWalls(prevWalls =>
           prevWalls.map(wall => {
             if (wall.up === true) {
               const newTop = wall.top + (wall.dy || 0);
   
-              if (lvl != 19 && lvl != 20) {
+              if (lvl !== 19 && lvl !== 20) {
 
               if (newTop < 0 || newTop + wall.height > window.innerHeight) {
                 return { ...wall, dy: -(wall.dy || 0) };
@@ -408,7 +381,7 @@ const gravity = sila * currentGravity.current;
   
             if (!wall.up) {
               // Bounce unless lvl 19/20
-              if (![20].includes(lvl)) {
+              if (![19, 20].includes(lvl)) {
                 if (newLeft < 0 || newLeft + wall.width > window.innerWidth) {
                   nextWalls.push({ ...wall, dy: -dy });
                   continue;
@@ -446,9 +419,7 @@ const gravity = sila * currentGravity.current;
   // Check collision with wall
 // Continuous collision detection for moving walls
 useEffect(() => {
-  let animationFrameId;
-
-  const checkCollisions = () => {
+  const interval = setInterval(() => {
     wallRefs.current.forEach((wallEl, i) => {
       if (!wallEl) return;
 
@@ -460,7 +431,6 @@ useEffect(() => {
 
       const bounds = wallEl.getBoundingClientRect();
 
-      // ✅ ONLY change this block for non-bullet collisions
       if (!wall.bullet) {
         const isOverWall =
           fakePosX >= bounds.left - mousesize &&
@@ -470,16 +440,10 @@ useEffect(() => {
 
         const opacity = parseFloat(getComputedStyle(wallEl).opacity);
 
-        if (
-          (opacity > 0.6 || (lvl !== 20 && lvl !== 19)) &&
-          isOverWall &&
-          (elements === "visible" || lvl === 12)
-        ) {
+        if ((opacity > 0.6 || (lvl !== 20 && lvl !== 19)) && isOverWall && (elements === "visible" || lvl === 12)) {
           die();
-          setVelocity({x:0,y:0})
         }
       } else {
-        // 🔫 Leave bullet logic untouched
         if (collidedBulletsRef.current.has(i)) return;
 
         const bossX = 1600;
@@ -487,7 +451,7 @@ useEffect(() => {
 
         const isOverBoss =
           bossX >= bounds.left &&
-          bossX <= bounds.right + 200 &&
+          bossX  <= bounds.right &&
           bossY + bossHeight >= bounds.top &&
           bossY - bossHeight <= bounds.bottom;
 
@@ -497,14 +461,10 @@ useEffect(() => {
         }
       }
     });
+  }, 5);
 
-    animationFrameId = requestAnimationFrame(checkCollisions);
-  };
-
-  checkCollisions(); // Initial call
-
-  return () => cancelAnimationFrame(animationFrameId);
-}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls]);
+  return () => clearInterval(interval);
+}, [fakePosX, fakePosY, bossY, mousesize, elements, lvl, walls,velocity]);
 
 
 
@@ -526,7 +486,6 @@ useEffect(() => {
 
     if (isOverWall && elements2 === "visible") {
       die();
-      setVelocity({x:0,y:0})
     }
   });
 
@@ -545,17 +504,14 @@ useEffect(() => {
       if (lvl === 18) {
         veloyRef.current = fanData.stry === 0 ? 0 : veloyRef.current + fanData.stry * 5;
       } else {
-        setVelocity(prev => ({
-          x: prev.x + fanData.strx,
-          y: prev.y + fanData.stry
+        setVelocity(v => ({
+          x: v.x + fanData.strx,
+          y: v.y + fanData.stry
         }));
-        
       }
     }
   });
-  
-}, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans,velocity]);
-
+}, [fakePosX, fakePosY, mousesize, elements2, elements3, lvl, fans]);
 
 
 
@@ -784,13 +740,13 @@ useEffect(() => {
 
   const handleClick = () => {
 
-    if (lvl == 20) {
+    if (lvl === 20) {
       setWalls(prevWalls => [
         ...prevWalls,
         { left: posX + 50, top: fakePosY, width: 50, height: 10, dy: 10, up: false, bullet:true}
       ]);
     }
-    if ((lvl == 14 || lvl == 15 ) && start2) {
+    if ((lvl === 14 || lvl === 15 ) && start2) {
       if ((Math.abs(velocity.x)< 0.1 && Math.abs(velocity.y) < 0.1)) {
 let dx = (fakePosX + mousesize/2) - posX;
 let dy = (fakePosY + mousesize*0.71) - posY;
@@ -800,11 +756,8 @@ const forceMultiplier = 0.1;
 // ⛔ Max launch speed (adjust as needed)
 const maxSpeed = 25;
 setIloscruchow(prev => prev -1)
-if (iloscruchow == -1) {
+if (iloscruchow === -1) {
   die()
-  setVelocity({x:0,y:0})
-  vx = 0
-  vy = 0
 }
 // Final velocity (clamped)
 let vx = dx * forceMultiplier;
@@ -826,22 +779,22 @@ setVelocity({ x: vx, y: vy });
 
 
     }
-    if (lvl == 4) {
+    if (lvl === 4) {
         console.log("JUMP")
         veloyRef.current = -15;
 
 
     }
-    if (lvl == 5 || lvl == 10) {
-      if (lvl == 10  && start2) {
+    if (lvl === 5 || lvl === 10) {
+      if (lvl === 10 ) {
         targetGravity.current = -1
       }
-      if (elements == "visible" && elements2=="hidden" && lvl == 10 && start2) {
+      if (elements === "visible" && elements2==="hidden" && lvl === 10) {
         targetGravity.current = 1;
-      } else if (elements2 == "visible" && elements=="hidden" && start2) {
+      } else if (elements2 === "visible" && elements==="hidden") {
         targetGravity.current = -1;
       }
-      if (lvl == 5) {
+      if (lvl === 5) {
         targetGravity.current = targetGravity.current * -1;
       }
 
@@ -853,8 +806,8 @@ setVelocity({ x: vx, y: vy });
       
 
     }
-    if (lvl == 8 || lvl == 10  && start2  || (bosshp < 300  && !wave3Ref.current)) {
-      if (elements == "hidden") {
+    if (lvl === 8 || lvl === 10  || (bosshp < 300  && !wave3Ref.current) && start2) {
+      if (elements === "hidden") {
         setElements("visible");
         setElements2("hidden")
         
@@ -864,7 +817,7 @@ setVelocity({ x: vx, y: vy });
       }
     }
     buttonRefs.current.forEach((btn, index) => {
-      if ((btn && Math.abs(velocity.x) < 2 && Math.abs(velocity.y) < 2) || lvl != 14) {
+      if ((btn && Math.abs(velocity.x) < 2 && Math.abs(velocity.y) < 2) || lvl !== 14) {
         const bounds = btn.getBoundingClientRect();
         const isOverButton =
         fakePosX >= bounds.left - mousesize &&
@@ -874,53 +827,52 @@ setVelocity({ x: vx, y: vy });
 
         if (isOverButton) {
           if (index === 0 ) {
-            if (!start2) {
-              setVelocity({x:0,y:0})
-            }
-            if(lvl == 10 && !start2) {
+            if (lvl === 10 && !start2) {
               targetGravity.current = -1
+            } else if (!start2){
+              targetGravity.current = 1
             }
             setElements3("visible")
             setElements("visible")
-            setClicked1("/public/redyes.png");
+            setClicked1(`${process.env.PUBLIC_URL}/redyes.png`);
             setVisible2("visible");
             start()
             setStart2(true)
             console.log("start")
-            if (lvl == 6) {
+            if (lvl === 6) {
               setMousesize(10)
-            } else if (lvl == 7) {
+            } else if (lvl === 7) {
               setLightsize(5)
               setLight(true)
             }
-            if(lvl == 20) {
+            if(lvl === 20) {
               setVisible2("hidden")
               setVisible3("hidden")
               setVisible4("hidden")
               
             }
             
-          } else if (index === 1 && visible2 == "visible") {
-            setClicked2("/public/redyes.png");
+          } else if (index === 1 && visible2 === "visible") {
+            setClicked2(`${process.env.PUBLIC_URL}/redyes.png`);
             setVisible3("visible");
-            if (lvl == 6) {
+            if (lvl === 6) {
               setMousesize(80)
-            } else if (lvl == 7) {
+            } else if (lvl === 7) {
               setLightsize(2.5)
-            } else if (lvl == 12) {
+            } else if (lvl === 12) {
               setElements("hidden")
             }
-          } else if (index === 2 && visible3 == "visible") {
-            setClicked3("/public/redyes.png");
+          } else if (index === 2 && visible3 === "visible") {
+            setClicked3(`${process.env.PUBLIC_URL}/redyes.png`)
             setVisible4("visible");
-            if (lvl == 6) {
+            if (lvl === 6) {
               setMousesize(200)
-            } else if (lvl == 7) {
+            } else if (lvl === 7) {
               setLightsize(1.5)
             }
 
-          } else if (index === 3 && visible4 == "visible") {
-            setClicked4("/public/redyes.png");
+          } else if (index === 3 && visible4 === "visible") {
+            setClicked4(`${process.env.PUBLIC_URL}/redyes.png`);
             setElements("hidden")
             setStart2(false)
             setLight(false)
@@ -928,18 +880,18 @@ setVelocity({ x: vx, y: vy });
             setElements2("hidden")
             setMulti(1)
             setElements3("hidden")
-          } else if (index == 4) {
+          } else if (index === 4) {
               setLvl(1)
               setVis1("visible")
               setVis3("none")
 
-          } else if (index == 5) {
+          } else if (index === 5) {
               
               setVis4("block");
               
               console.log("UKRYTY");
 
-          } else if (index == 12) {
+          } else if (index === 12) {
             setLight(false)
             setCheat(true)
             setLvl(1)
@@ -947,7 +899,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 13) {
+          else if (index === 13) {
             setLight(false)
             setCheat(true)
             setLvl(2)
@@ -955,7 +907,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 14) {
+          else if (index === 14) {
             setLight(false)
             setCheat(true)
             setLvl(3)
@@ -963,7 +915,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 15) {
+          else if (index === 15) {
             setLight(false)
             setCheat(true)
             setLvl(4)
@@ -971,7 +923,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 16) {
+          else if (index === 16) {
             setLight(false)
             setCheat(true)
             setLvl(5)
@@ -979,7 +931,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 17) {
+          else if (index === 17) {
             setLight(false)
             setCheat(true)
             setLvl(6)
@@ -987,7 +939,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 18) {
+          else if (index === 18) {
             setLight(false)
             setCheat(true)
             setLvl(7)
@@ -995,7 +947,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 19) {
+          else if (index === 19) {
             setLight(false)
             setCheat(true)
             setLvl(8)
@@ -1003,7 +955,7 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 20) {
+          else if (index === 20) {
             setLight(false)
             setCheat(true)
             setLvl(9)
@@ -1011,70 +963,70 @@ setVelocity({ x: vx, y: vy });
             setVis1("visible")
             setVis3("none")
           }
-          else if (index == 21) {
+          else if (index === 21) {
             setLight(false)
             setCheat(true)
             setLvl(10)
             console.log("11")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 22) {
+          }else if (index === 22) {
             setLight(false)
             setCheat(true)
             setLvl(11)
             console.log("12")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 23) {
+          }else if (index === 23) {
             setLight(false)
             setCheat(true)
             setLvl(12)
             console.log("13")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 24) {
+          }else if (index === 24) {
             setLight(false)
             setCheat(true)
             setLvl(13)
             console.log("14")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 25) {
+          }else if (index === 25) {
             setLight(false)
             setCheat(true)
             setLvl(14)
             console.log("15")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 26) {
+          }else if (index === 26) {
             setLight(false)
             setCheat(true)
             setLvl(15)
             console.log("16")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 27) {
+          }else if (index === 27) {
             setLight(false)
             setCheat(true)
             setLvl(16)
             console.log("17")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 28) {
+          }else if (index === 28) {
             setLight(false)
             setCheat(true)
             setLvl(17)
             console.log("18")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 29) {
+          }else if (index === 29) {
             setLight(false)
             setCheat(true)
             setLvl(18)
             console.log("19")
             setVis1("visible")
             setVis3("none")
-          }else if (index == 30) {
+          }else if (index === 30) {
             setLight(false)
             setCheat(true)
             setLvl(19)
@@ -1107,10 +1059,10 @@ setVelocity({ x: vx, y: vy });
     if (
       
       (
-      clicked1 === "/public/redyes.png" &&
-      clicked2 === "/public/redyes.png" &&
-      (clicked3 === "/public/redyes.png" || buttons[2].dis == true) &&
-      (clicked4 === "/public/redyes.png" || buttons[3].dis == true)) || cheat || (bosshp < 0 && wave3Ref.current == true)
+      clicked1 === `${process.env.PUBLIC_URL}/redyes.png` &&
+      clicked2 === `${process.env.PUBLIC_URL}/redyes.png`  &&
+      (clicked3 === `${process.env.PUBLIC_URL}/redyes.png`  || buttons[2].dis === true) &&
+      (clicked4 === `${process.env.PUBLIC_URL}/redyes.png`  || buttons[3].dis === true)) || cheat || (bosshp < 0 && wave3Ref.current === true)
     ) {
       setLvl(prev => {
         const newLvl = prev + 1;
@@ -1131,10 +1083,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "20.12vh", width: "10.42vw", height: "80vh" },
             ])
             setButtons([
-              { x: "10.42vw", y: "42.37vh", dis: false },
-              { x: "33.85vw", y: "42.37vh", dis: false },
-              { x: "57.29vw", y: "42.37vh", dis: false },
-              { x: "80.73vw", y: "42.37vh", dis: false }
+              {x:200,y:400,dis:false},
+              {x:650,y:400,dis:false},
+              {x:1100,y:400,dis:false},
+              {x:1550,y:400,dis:false}
             ])
             break;
           case 3:
@@ -1148,10 +1100,10 @@ setVelocity({ x: vx, y: vy });
               { left: "41.67vw", top: "56.33vh", width: "30vw", height: "10.06vh" },
             ])
               setButtons([
-                { x: "48.70vw", y: "49.26vh", dis: false },
-                { x: "48.70vw", y: "72.03vh", dis: false },
-                { x: "48.70vw", y: "5.30vh", dis: false },
-                { x: "48.70vw", y: "93.22vh", dis: false }
+                {x:935,y:465,dis:false},
+                {x:935,y:680,dis:false},
+                {x:935,y:50,dis:false},
+                {x:935,y:880,dis:false}
               ])
             break;
           case 4:
@@ -1169,10 +1121,10 @@ setVelocity({ x: vx, y: vy });
             ])
             
             setButtons([
-              { x: "10.42vw", y: "42.37vh", dis: false },
-              { x: "29.17vw", y: "42.37vh", dis: false },
-              { x: "47.40vw", y: "42.37vh", dis: false },
-              { x: "80.73vw", y: "84.75vh", dis: false }
+              {x:200,y:400,dis:false},
+              {x:560,y:400,dis:false},
+              {x:910,y:400,dis:false},
+              {x:1550,y:800,dis:false}
 
             ])
 
@@ -1187,10 +1139,10 @@ setVelocity({ x: vx, y: vy });
               { left: "0.05vw", top: "90.01vh", width: "100vw", height: "9.99vh" },
             ])
             setButtons([
-            { x: "10.42vw", y: "42.37vh", dis: false },
-            { x: "33.85vw", y: "63.56vh", dis: false },
-            { x: "57.29vw", y: "21.19vh", dis: false },
-            { x: "80.73vw", y: "84.75vh", dis: false }
+            {x:200,y:400,dis:false},
+            {x:650,y:600,dis:false},
+            {x:1100,y:200,dis:false},
+            {x:1550,y:800,dis:false}
             ])
             break;
             case 6:
@@ -1207,10 +1159,10 @@ setVelocity({ x: vx, y: vy });
                 { left: "46.77vw", top: "0vh", width: "7.81vw", height: "9.99vh" },
               ])
               setButtons([
-                { x: "7.29vw", y: "63.56vh", dis: false },
-                { x: "30.73vw", y: "74.15vh", dis: false },
-                { x: "48.96vw", y: "12.71vh", dis: false },
-                { x: "59.90vw", y: "95.34vh", dis: false }
+                {x:140,y:600,dis:false},
+                {x:590,y:700,dis:false},
+                {x:940,y:120,dis:false},
+                {x:1150,y:900,dis:false}
               ])
               break;
             case 7:
@@ -1349,11 +1301,41 @@ setVelocity({ x: vx, y: vy });
                     setVis1("none");
                     setVis2("block");
 setWalls([
-  { id: 'wall1', left: '18.23vw', top: '20.12vh', width: '10.42vw', height: '80.48vh' },
-  { id: 'wall2', left: '65.10vw', top: '20.12vh', width: '10.42vw', height: '80.48vh' },
-  { id: 'wall3', left: '41.67vw', top: '0vh', width: '10.42vw', height: '80.48vh' },
-  { id: 'wall4', left: '0vw', top: '98.39vh', width: '104.17vw', height: '2.01vh' },
-  { id: 'wall5', left: '0vw', top: '0vh', width: '104.17vw', height: '2.01vh' }
+  {
+    id: 'wall1',
+    left: window.innerWidth * 0.1823,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall2',
+    left: window.innerWidth * 0.6510,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall3',
+    left: window.innerWidth * 0.4167,
+    top: 0,
+    width: window.innerWidth * 0.1042,
+    height: window.innerHeight * 0.8048
+  },
+  {
+    id: 'wall4',
+    left: 0,
+    top: window.innerHeight * 0.9839,
+    width: window.innerWidth * 1.0417,
+    height: window.innerHeight * 0.0201
+  },
+  {
+    id: 'wall5',
+    left: 0,
+    top: 0,
+    width: window.innerWidth * 1.0417,
+    height: window.innerHeight * 0.0201
+  }
 ]);
 
                     setWalls([
@@ -1412,7 +1394,7 @@ setWalls([
                         { x: "10.42vw", y: "7.04vh",  dis: false },
                       ]);
                       setFans([
-                        { x: 1400, y: 850, sizex: 350, sizey: 150, strx: 0.1, stry: 0 },
+                        { x: 1400, y: 850, sizex: 350, sizey: 200, strx: 0.1, stry: 0 },
                         
                         { x: 1750, y: 500, sizex: 200, sizey: 500, strx: -0.05, stry: -0.3 },
                         { x: 1750, y: 450, sizex: 200, sizey: 50, strx: -0.05, stry: 0.3 },
@@ -1422,17 +1404,41 @@ setWalls([
                     break;
                     case 16:
 setWalls([
-  { id: 'wall1', left: '99vw', top: '0vh', width: '1.04vw', height: '100vh' },
-  { id: 'wall2', left: '20.83vw', top: '30.18vh', width: '7.81vw', height: '30.18vh' },
-  { id: 'wall3', left: '41.67vw', top: '40.24vh', width: '15.63vw', height: '15.09vh' },
-  { id: 'wall4', left: '72.92vw', top: '20.12vh', width: '7.81vw', height: '80.48vh' }
+  {
+    id: 'wall1',
+    left: window.innerWidth * 0.99,
+    top: 0,
+    width: window.innerWidth * 0.0104,
+    height: window.innerHeight
+  },
+  {
+    id: 'wall2',
+    left: window.innerWidth * 0.2083,
+    top: window.innerHeight * 0.3018,
+    width: window.innerWidth * 0.0781,
+    height: window.innerHeight * 0.3018
+  },
+  {
+    id: 'wall3',
+    left: window.innerWidth * 0.4167,
+    top: window.innerHeight * 0.4024,
+    width: window.innerWidth * 0.1563,
+    height: window.innerHeight * 0.1509
+  },
+  {
+    id: 'wall4',
+    left: window.innerWidth * 0.7292,
+    top: window.innerHeight * 0.2012,
+    width: window.innerWidth * 0.0781,
+    height: window.innerHeight * 0.8048
+  }
 ]);
 
                       setFans([
-                        { x: 0,    y: 0,    sizex: 500, sizey: 1000, strx: 0.05, stry: 0 },
-                        { x: 500,   y: 0,    sizex: 500, sizey: 1000, strx: 0.10, stry: 0 },
-                        { x: 1000,   y: 0,    sizex: 500, sizey: 1000, strx: 0.12, stry: 0 },
-                        { x: 1500,   y: 0,    sizex: 500, sizey: 1000, strx: 0.15, stry: 0 },
+                        { x: "0vw",    y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.05, stry: 0 },
+                        { x: "25vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.10, stry: 0 },
+                        { x: "50vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.12, stry: 0 },
+                        { x: "75vw",   y: "0vh",    sizex: "25vw", sizey: "100vh", strx: 0.15, stry: 0 },
                       ]);
                       setButtons([
                         { x: "5.21vw",  y: "50.30vh", dis: false },
@@ -1525,31 +1531,32 @@ setWalls([
                     case 18:
                       setSila(0.2)
                       setWalls([
-                        { left: "0vw", top: "98vh", width: "104.17vw", height: "2vh" },
-                        { left: "15.63vw", top: "0vh", width: "7.81vw", height: "21.19vh" },
-                        { left: "15.63vw", top: "42.37vh", width: "7.81vw", height: "84.75vh" },
-                        { left: "39.06vw", top: "0vh", width: "7.81vw", height: "63.56vh" },
-                        { left: "39.06vw", top: "84.75vh", width: "7.81vw", height: "63.56vh" },
+                        { left: 0, top: "98vh", width: 2000, height: "2vh" },
+                        { left: 300, top: 0, width: 150, height: 200 },
+                        { left: 300, top: 400, width: 150, height: 800 },
+                        { left: 750, top: 0, width: 150, height: 600 },
+                        { left: 750, top: 800, width: 150, height: 600 },
 
 
 
                       ])
                     setFans([
-                      { x: "0vw", y: "53.05vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -0.2 },
-                      { x: "23.44vw", y: "42.37vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -0.2 },
-                      { x: "0vw", y: "0vh", sizex: "104.17vw", sizey: "0.11vh", strx: 0, stry: 0 },
-                      { x: "54.69vw", y: "84.75vh", sizex: "7.81vw", sizey: "84.75vh", strx: 0, stry: -3 },
-                      { x: "80.73vw", y: "21.19vh", sizex: "10.42vw", sizey: "21.19vh", strx: 0, stry: -1 },
-                    ])
+                      { x: 0, y: 500 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
+                      { x: 450, y: 400 ,sizex: 150, sizey: 800, strx: 0, stry: -0.2 },
+                      { x: 0, y: 0 ,sizex: 2000, sizey: 1, strx: 0, stry: 0 },
+                      { x: 1050, y: 800 ,sizex: 150, sizey: 800, strx: 0, stry: -3 },
+                      { x: 1550, y: 200 ,sizex: 200, sizey: 200, strx: 0, stry: -1 },
 
                                                
 
 
+                    ])
                     setButtons([
-                      { x: "6.51vw", y: "10.59vh", dis: false },
-                      { x: "35.16vw", y: "74.15vh", dis: false },
-                      { x: "84.64vw", y: "15.89vh", dis: false },
-                      { x: "89.84vw", y: "90.04vh", dis: true },
+                      {x:125,y:100,dis:false},
+                      {x:675,y:700,dis:false},
+                      {x:1625,y:150,dis:false},
+                      {x:1725,y:850,dis:true},
+                    
                     ])
                       break;
                     case 19:
@@ -1564,10 +1571,10 @@ setWalls([
                       ])
                       setButtons([
 
-                        { x: "10.42vw", y: "42.37vh", dis: false },
-                       { x: "33.85vw", y: "42.37vh", dis: false },
-                       { x: "57.29vw", y: "42.37vh", dis: false },
-                       { x: "80.73vw", y: "42.37vh", dis: false }
+                        {x:200,y:400,dis:false},
+                       {x:650,y:400,dis:false},
+                       {x:1100,y:400,dis:false},
+                       {x:1550,y:400,dis:false}
                       
                       
                       
@@ -1600,10 +1607,10 @@ setWalls([
           default:
             break;
         }
-        setClicked1("/public/redno.png")
-        setClicked2("/public/redno.png")
-        setClicked3("/public/redno.png")
-        setClicked4("/public/redno.png")
+        setClicked1(`${process.env.PUBLIC_URL}/redno.png`)
+        setClicked2(`${process.env.PUBLIC_URL}/redno.png`)
+        setClicked3(`${process.env.PUBLIC_URL}/redno.png`)
+        setClicked4(`${process.env.PUBLIC_URL}/redno.png`)
   
         return newLvl;
       });
@@ -1612,8 +1619,8 @@ setWalls([
   }, [clicked1, clicked2, clicked3, clicked4,lvl]);
   const start = () => {
     
-    if (lvl == 8 || lvl == 10 && start2) {
-      if (elements == "hidden") {
+    if (lvl === 8 || lvl === 10 && start2) {
+      if (elements === "hidden") {
         setElements("visible");
         setElements2("hidden")
       } else {
@@ -1623,9 +1630,9 @@ setWalls([
     } else {
       setElements("visible")
     }
-    if (lvl == 3) {
+    if (lvl === 3) {
       setMulti(5)
-    } else if (lvl == 9 ){
+    } else if (lvl === 9 ){
       setMulti(-1)
     } else {
       setMulti(1)
@@ -1633,10 +1640,9 @@ setWalls([
 
   }
   const die = () => {
-    setVelocity({x:0,y:0})
     wave3Ref.current = false
-    
-    if (lvl == 19) {
+    setVelocity({x:0,y:0})
+    if (lvl === 19) {
       setLight(false)
       setCheat(true)
       setLvl(18)
@@ -1645,7 +1651,7 @@ setWalls([
       setVis3("none")
       setElements("visible")
     }
-    if (lvl == 20) {
+    if (lvl === 20) {
       setBosshp(500)
       setWave2(false)
       setWalls([])
@@ -1659,22 +1665,22 @@ setWalls([
       setVis1("visible")
       setVis3("none")
     }
-    if (lvl == 14) {
+    if (lvl === 14) {
       setIloscruchow(5)
-    } else if (lvl == 15){
+    } else if (lvl === 15){
       setIloscruchow(8)
     }
     setElements3("hidden")
     setClicked3("hidden")
     setElements("hidden")
-    setClicked1("/public/redno.png")
-    setClicked2("/public/redno.png")
-    setClicked3("/public/redno.png")
-    setClicked4("/public/redno.png")
+    setClicked1(`${process.env.PUBLIC_URL}/redno.png`)
+    setClicked2(`${process.env.PUBLIC_URL}/redno.png`)
+    setClicked3(`${process.env.PUBLIC_URL}/redno.png`)
+    setClicked4(`${process.env.PUBLIC_URL}/redno.png`)
     setVisible2("hidden")
     setVisible3("hidden")
     setVisible4("hidden")
-    if (lvl != 9) {
+    if (lvl !== 9) {
       setMulti(1)
     }
 
@@ -1692,13 +1698,8 @@ setWalls([
 
   return (
     <div className="App" style={{
-      height:"100vh",
-      width:"100vw",
-      position: "absolute",
-      top:0,
-      left:0,
-      backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
-      cursor: lvl == 0 ?  "auto" : "none"
+      backgroundColor: elements2 === "visible" ? "#d4c4ca" : "#2b3b35",
+      cursor: lvl === 0 ?  "auto" : "none"
     }}>
       {/* Click catcher */}
       <div
@@ -1730,14 +1731,14 @@ setWalls([
   >
     <img
       style={{height:250,transform: blaster.rotate ?  "none" : "rotate(90deg)"}}
-      src="/public/gasteropen.png"
+      src={`${process.env.PUBLIC_URL}/gasteropen.png`}
     />
   </div>
 ))}
       {/*WALLS */}
       {walls.map((wall, index) => (
   <div
-    key= {lvl == 20 ? wall.id : index}
+    key= {lvl === 20 ? wall.id : index}
     ref={(el) => (wallRefs.current[index] = el)}
     className={wall.blaster ? "gaster-wall" : ""}
     style={{
@@ -1748,7 +1749,7 @@ setWalls([
       visibility: elements,
       //visibility:  (bosshp < 300 && !wave2) ? "visible" : elements,
       position: "absolute",
-      //opacity: elements == "visible" ? (bosshp < 300 && !wave2) ? 1 : 1 : 0.2,
+      //opacity: elements === "visible" ? (bosshp < 300 && !wave2) ? 1 : 1 : 0.2,
       top: wall.top,
       left: wall.left,
       zIndex: 1,
@@ -1765,7 +1766,7 @@ setWalls([
           backgroundColor: "blue",
           visibility: elements2,
           //visibility: (bosshp < 300 &&  !wave2) ? "visible" : elements2,
-         // opacity : elements2 == "visible" ? (bosshp < 300  && !wave2) ? 1 : 1 : 0.2,
+         // opacity : elements2 === "visible" ? (bosshp < 300  && !wave2) ? 1 : 1 : 0.2,
           position: "absolute",
           top: wall2.top,
           left: wall2.left,
@@ -1790,37 +1791,17 @@ setWalls([
   />
 ))}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       {/* Buttons */}
       <button
         ref={el => buttonRefs.current[0] = el}
         
         style={{ 
-          margin: 0,  visibility:lvl == 0 ? "hidden" : "visible" , zIndex: 2,
+          margin: 0,  visibility:lvl === 0 ? "hidden" : "visible" , zIndex: 2,
           position:"absolute",
           left: buttons[0].x,
           top: buttons[0].y,
-          backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
-          visibility: lvl == 0 ? "hidden" : "visible" 
+          backgroundColor: elements2 === "visible" ? "#d4c4ca" : "#2b3b35",
+          visibility: lvl === 0 ? "hidden" : "visible" 
         }}
         className='button'>
 
@@ -1829,11 +1810,11 @@ setWalls([
 
       <button
         ref={el => buttonRefs.current[1] = el}
-        style={{ margin: 0,  visibility:lvl == 0 ? "hidden" : visible2 , zIndex: 2,
+        style={{ margin: 0,  visibility:lvl === 0 ? "hidden" : visible2 , zIndex: 2,
           position:"absolute",
           left:buttons[1].x,
           top: buttons[1].y,
-          backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
+          backgroundColor: elements2 === "visible" ? "#d4c4ca" : "#2b3b35",
           }}
         className='button'
       >
@@ -1842,11 +1823,11 @@ setWalls([
 
       <button
         ref={el => buttonRefs.current[2] = el}
-        style={{ margin: 0, visibility:lvl == 0 ? "hidden" : visible3 , zIndex: 2,
+        style={{ margin: 0, visibility:lvl === 0 ? "hidden" : visible3 , zIndex: 2,
           position:"absolute",
           left: buttons[2].x,
           top: buttons[2].y,
-          backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
+          backgroundColor: elements2 === "visible" ? "#d4c4ca" : "#2b3b35",
           
       }}
         className='button'
@@ -1856,11 +1837,11 @@ setWalls([
 
       <button
         ref={el => buttonRefs.current[3] = el}
-        style={{ margin: 0,  visibility:lvl == 0 ? "hidden" : visible4 , zIndex: 2,
+        style={{ margin: 0,  visibility:lvl === 0 ? "hidden" : visible4 , zIndex: 2,
           position:"absolute",
           left: buttons[3].x,
           top: buttons[3].y,
-          backgroundColor: elements2 == "visible" ? "#d4c4ca" : "#2b3b35",
+          backgroundColor: elements2 === "visible" ? "#d4c4ca" : "#2b3b35",
           }}
         className='button'
       >
@@ -1885,9 +1866,10 @@ setWalls([
 
 
       {/* Fake cursor */}
-      <img
+      <img 
         id='cursor'
-        src="/public/cursor.png"
+        draggable="false"
+        src={`${process.env.PUBLIC_URL}/cursor.png`}
         alt="custom cursor"
         style={{
           width: mousesize,
@@ -1897,12 +1879,13 @@ setWalls([
           top: `${fakePosY }px`,
           pointerEvents: 'none',
           zIndex: 9999,
-          visibility: lvl == 0 ?  "hidden" : "visible"
+          visibility: lvl === 0 ?  "hidden" : "visible"
         }}
       />
-            <img
+            <img 
         id='cursor2'
-        src="/public/cursor.png"
+        draggable="false"
+        src={`${process.env.PUBLIC_URL}/cursor.png`}
         style={{
           width: 200,
           height:200 * 1.42 ,
@@ -1911,16 +1894,17 @@ setWalls([
           top: `${bossY}px`,
           pointerEvents: 'none',
           zIndex: 9999,
-          visibility: lvl == 20 ?  "visible" : "hidden"
+          visibility: lvl === 20 ?  "visible" : "hidden"
         }}
       />
 <img
   id='light'
-  src="/public/light.png"
+  src={`${process.env.PUBLIC_URL}/light.png`}
   alt="custom cursor"
+  draggable="false"
   style={{
-    visibility: lvl == 7 ? 'visible':'hidden' ,
-    display: lvl == 7 ? "block" : "none",
+    visibility: lvl === 7 ? 'visible':'hidden' ,
+    display: lvl === 7 ? "block" : "none",
     width: `calc(200vw * ${lightsize})`,
     height: `calc(200vh * ${lightsize})`,
     position: 'absolute',
@@ -1943,7 +1927,7 @@ setWalls([
       border: "none"
     }}
   >
-    <img id="logo" src="/public/LOGO.png" alt="Logo" />
+    <img id="logo" src={`${process.env.PUBLIC_URL}/LOGO.png`} alt="Logo" />
   </button>
 
   <br />
@@ -1958,8 +1942,8 @@ setWalls([
       border: "none"
     }}
   >
-    <img
-      src="/public/redno.png"
+    <img 
+      src={`${process.env.PUBLIC_URL}/redno.png`}
       alt="Red No"
       style={{
         backgroundColor: "#2b3b35",
@@ -2092,14 +2076,14 @@ setWalls([
   backgroundColor: wave2 ?  "rgb(255, 136, 0)" : "rgb(151, 0, 0)",
   width:bosshp,
   height:50,
-  visibility: lvl == 20 ? 'visible' : 'hidden',
+  visibility: lvl === 20 ? 'visible' : 'hidden',
 left:`calc(34% + 5px)` ,
 top: 15,
   position:"absolute",
   zIndex:9
 }}></div>
 <div id='HP' style={{
-    visibility: lvl == 20 ? 'visible' : 'hidden',
+    visibility: lvl === 20 ? 'visible' : 'hidden',
   backgroundColor: "gray",
   width:500,
   height:50,
@@ -2126,7 +2110,7 @@ style={{
     width: '100vw',
     height: '100vh',
     zIndex: 1000, // above everything else
-    visibility: start2 ? lvl == 14 || lvl == 15  ? "visible" : "hidden" : "hidden"
+    visibility: start2 ? lvl === 14 || lvl === 15  ? "visible" : "hidden" : "hidden"
   }}
 >
   <line
@@ -2141,15 +2125,15 @@ style={{
   />
 </svg>
 <h1 style={{
-visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
+visibility: start2 ? lvl === 14 || lvl === 15 ? "visible" : "hidden" : "hidden"
 
 
 }}>POZOSTAŁE RUCHU {iloscruchow}</h1>
-<img src='/public/nowifi.png' style={{
+<img src='nowifi.png' style={{
   height:200,
   zIndex:9995,
 
-  visibility: lvl == 13 ? start2 ? "visible" : "hidden" : "hidden",
+  visibility: lvl === 13 ? start2 ? "visible" : "hidden" : "hidden",
   position: "absolute",
   top:0,
   right:0
@@ -2158,5 +2142,4 @@ visibility: start2 ? lvl == 14 || lvl == 15 ? "visible" : "hidden" : "hidden"
   );
 };
 
-// Expose the App component globally so index.html can access it without modules
-window.App = App;
+export default App;
