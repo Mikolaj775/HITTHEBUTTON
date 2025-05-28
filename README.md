@@ -8,13 +8,17 @@ Links to dowload:
 
 Linux: https://drive.google.com/file/d/1jSDOev-eKbr_MW7BA6OVgmN6b7vnBKPQ/view?usp=sharing
 
-Windows: https://drive.google.com/file/d/1wm1V0-qYlFmpOhzk3v1to2IuEGYUC8dk/view?usp=sharing
+Windows: https://drive.google.com/file/d/10_22xsEkDKhf2Gr9DrnY4pmN9YgEdyBM/view?usp=sharing
 
 it dosnt work on netlify so i made it into app
 
-Version of the game beta 1.5v
+Version of the game beta 1.6v 
 
-the boss fight now work taking 250 shots to kill him good luck :P
+-the boss fight now work taking 250 shots to kill him good luck :P
+
+-now it works also on windows
+
+-fancy DEATH confetti :))
 
 
 
